@@ -29,27 +29,49 @@ class Personaje(Objeto):
 		self.espada = Espada(self.x, self.y, 20, 50, (255,255,255), 1, 0, 0)
 	
 	def Movimiento(self):
-		global salto, angulo, x_jump, salto_doble, w, correr
+		global salto, angulo, x_jump, salto_doble, w, correr, suelo, x_sup, jump
 		x = self.x
 		y = self.y
 		keys = key.get_pressed()
-		if keys[K_w]==1 and angulo == 0.0:
-			angulo = 0.001
-			salto = True
-			w = True
-		if keys[K_w]==0:
-			w = False
-		if keys[K_w]==1 and w == False and salto_doble == False:
-			angulo = 0.001
-			x_jump = self.y
-			salto_doble = True
-		self.y = x_jump - sin(angulo)*100
-		if angulo > 0:
-			angulo += 0.025
-		if angulo > pi:
-			angulo = 0.0
-		if angulo == 0.0 and self.y < 575:
-			self.y += 1
+		#print(angulo)
+		#print(suelo)
+		if angulo == 0.0 and suelo == False:
+			self.y += 2
+		else:
+			if suelo == True:
+				salto = False
+				angulo = 0.0
+				x_jump = self.y
+				x_sup = self.y
+				salto_doble = True
+			if keys[K_w]==1 and angulo == 0.0:
+				angulo = 0.001
+				salto = True
+				w = True
+			if keys[K_w]==0:
+				w = False
+			if keys[K_w]==1 and w == False and salto_doble == False:
+				angulo = 0.001
+				x_jump = self.y
+				salto_doble = True
+			
+			if salto == True:
+				jump += 1
+				if jump == 50:
+					jump = 0
+					x_jump = x_sup
+					salto_doble = False
+					salto = False
+			if angulo == 0.0 and suelo == False and x_jump != x_sup:
+				x_jump = x_sup
+				angulo = pi / 2
+
+			self.y = x_jump - sin(angulo)*100
+			
+			if 0 < angulo:
+				angulo += 0.025
+			if angulo > pi:
+				angulo = 0.0
 
 		if keys[K_w]:
 			self.direcciony = 1
@@ -146,12 +168,12 @@ class Boss(Objeto):
 		Objeto.__init__(self, x, y, ancho, largo, color, vidas, direccionx, direcciony)
 		self.espada1 = Disparo(1000, -100, 20, 100, (255,0,0), 0, 0, 0)
 		self.espada2 = Disparo(1000, -100, 20, 100, (255,0,0), 0, 0, 0)
-		self.disparo1 = Disparo(1330, 500, self.ancho, 100, (255,0,0), 0, 0, 0)
-		self.disparo2 = Disparo(-50, 500, self.ancho, 100, (255,0,0), 0, 0, 0)
-		self.disparo3 = Disparo(1330, 500, self.ancho, 100, (255,0,0), 0, 0, 0)
-		self.disparo4 = Disparo(-50, 500, self.ancho, 100, (255,0,0), 0, 0, 0)
-		self.disparo5 = Disparo(1330, 500, self.ancho, 100, (255,0,0), 0, 0, 0)
-		self.disparo6 = Disparo(-50, 500, self.ancho, 100, (255,0,0), 0, 0, 0)
+		self.disparo1 = Disparo(1380, 500, self.ancho, 100, (255,0,0), 0, 0, 0)
+		self.disparo2 = Disparo(-100, 500, self.ancho, 100, (255,0,0), 0, 0, 0)
+		self.disparo3 = Disparo(1380, 500, self.ancho, 100, (255,0,0), 0, 0, 0)
+		self.disparo4 = Disparo(-100, 500, self.ancho, 100, (255,0,0), 0, 0, 0)
+		self.disparo5 = Disparo(1380, 500, self.ancho, 100, (255,0,0), 0, 0, 0)
+		self.disparo6 = Disparo(-100, 500, self.ancho, 100, (255,0,0), 0, 0, 0)
 
 	def Movimiento_Gordo(self):
 		global hit
@@ -186,21 +208,23 @@ class Disparo(Objeto):
 	def Movimiento_Terremoto1(self):
 		if Personaje.check_colisiones(self, plataforma) == True:
 			plataforma.vidas -= 10
-			self.x = 1330
-		if self.x < 1330:
+			self.x = 1380
+		if self.x < 1380:
 			self.x += 2
 	
 	def Movimiento_Terremoto2(self):
 		if Personaje.check_colisiones(self, plataforma) == True:
 			plataforma.vidas -= 10
-			self.x = -50
-		if self.x > -50:
+			self.x = -100
+		if self.x > -100:
 			self.x -= 2
 	
 	def Caida_Espada(self, disparo1, disparo2):
 		if Personaje.check_colisiones(self, plataforma) == True:
 			plataforma.vidas -= 10
 			self.y = -100
+			disparo1.x = 1380
+			disparo2.x = -100
 			self.vidas = 0
 		if self.y < 500:
 			if self.y == -100:
@@ -213,9 +237,17 @@ class Disparo(Objeto):
 				self.vidas = 1
 			disparo1.Movimiento_Terremoto1()
 			disparo2.Movimiento_Terremoto2()
-		if disparo1.x == 1330 and disparo2.x == -50 and self.vidas == 1:
+		if disparo1.x == 1380 and disparo2.x == -100 and self.vidas == 1:
 			self.y = -100
 			self.vidas = 0
+
+class Suelo(Objeto):
+	def __init__(self, x, y, ancho, largo, color , vidas, direccionx, direcciony):
+		Objeto.__init__(self, x, y, ancho, largo, color, vidas, direccionx, direcciony)
+	
+	def check_suelo(self, sprite1):
+		if (sprite1.y + sprite1.largo) > self.y and (sprite1.x + sprite1.ancho) > self.x and sprite1.x < (self.x + self.ancho):
+			return True
 
 def barra_hp(screen, x, y, hp, color):
 	largo = 165
@@ -223,11 +255,12 @@ def barra_hp(screen, x, y, hp, color):
 	calculo_barra = int((hp / 100)*largo)
 	draw.rect(screen, color, Rect(x, y, calculo_barra, ancho))
 
-plataforma = Personaje(625, 500, 20, 20,(255,255,255), 100, 1, 2)
+plataforma = Personaje(625, 500, 20, 25,(255,255,255), 100, 1, 2)
 enemigo = Boss(100, 550, 30, 50, (255,0,0), 100, 1, 2)
-jump = 0
 level = 0
 z = -1
+suelo1 = Suelo(0, 599, 1280, 300, (0, 0, 0), 0, 0, 0)
+suelo2 = Suelo(500, 550, 100, 100, (0, 0, 0), 0, 0, 0)
 fondo1 = transform.scale(image.load("shoshin-kantetsu_images/fondo1.jpg").convert(), (1280, 720))
 fondo2 = transform.scale(image.load("shoshin-kantetsu_images/fondo2.jpg").convert(), (1280, 720))
 fondo3 = transform.scale(image.load("shoshin-kantetsu_images/fondo3.jpg").convert(), (1280, 720))
@@ -272,11 +305,12 @@ fondo = fondo2
 cut_scene_manager = CutSceneManager(screen)
 
 while True:
-	global salto, angulo, x_jump, salto_doble, w, quieto, correr, ataque, ataque_espada, time_ataque, terremoto, hit
+	global salto, angulo, x_jump, salto_doble, w, quieto, correr, ataque, ataque_espada, time_ataque, terremoto, hit, suelo, x_sup, jump
 	if z == -1:
 		salto = False
 		angulo = 0.0
 		x_jump = 575
+		x_sup = 575
 		salto_doble = False
 		w = False
 		quieto = True
@@ -286,38 +320,38 @@ while True:
 		time_ataque = 0
 		terremoto = True
 		hit = False
+		suelo = False
+		jump = 0
 		#cut_scene_manager.start_cut_scene(CutSceneZero(plataforma))
 		if cut_scene_manager.cut_scene is None:
 			z = 0
 
 	animacion_hikaru += 1
+	#print(plataforma.y)
 
 	if cut_scene_manager.cut_scene is None:
-		if salto == True:
-			jump += 1
-			if jump == 50:
-				jump = 0
-				x_jump = 575
-				salto_doble = False
-				salto = False
-		if angulo == 0.0 and plataforma.y < 625 and x_jump != 575:
-			x_jump = 575
-			angulo = pi / 2
 		
 		plataforma.Movimiento()
 		plataforma.Ataque()
 
 	#FONDO
 	screen.blit(fondo, [0, 0])
-	draw.rect(screen, (0, 0, 0, 255), (0, 600, 1280, 300))
+	#draw.rect(screen, (0, 0, 0, 255), (0, 600, 1280, 300))
+	suelo1.DibujarObjeto()
+	suelo2.DibujarObjeto()
 	barra_hp(screen, 50, 40, enemigo.vidas, (255,0,0))
 	barra_hp(screen, 1060, 40, plataforma.vidas, (0,0,255))
 	screen.blit(vida_hikaru, [1000, -100])
 	screen.blit(vida_boss, [-25, -100])
-	#plataforma.DibujarObjeto()
+	plataforma.DibujarObjeto()
 	#enemigo.DibujarObjeto()
 
 	if level == 1:
+		#COMPROBACION SUELO
+		if suelo1.check_suelo(plataforma) or suelo2.check_suelo(plataforma):
+			suelo = True
+		else:
+			suelo = False
 		#ANIMACION GORDO
 		if enemigo.vidas <= save_vida:
 			if enemigo.x <= 80:
@@ -338,14 +372,14 @@ while True:
 				screen.blit(slash, [enemigo.disparo5.x-50, enemigo.disparo5.y])
 				screen.blit(slash_, [enemigo.disparo6.x-20, enemigo.disparo6.y])
 		if enemigo.direccionx == 2:
-			if terremoto == True and plataforma.x != 625:
+			if terremoto == True and suelo == False:
 				enemigo.disparo1.x = enemigo.x + 30
 				enemigo.disparo2.x = enemigo.x
 				terremoto = False
 			enemigo.Terremoto_Gordo()
 			screen.blit(slash, [enemigo.disparo1.x-50, enemigo.disparo1.y])
 			screen.blit(slash_, [enemigo.disparo2.x-20, enemigo.disparo2.y])
-		if enemigo.disparo1.x != 1330 and enemigo.disparo2.x != -50:
+		if enemigo.disparo1.x != 1380 and enemigo.disparo2.x != -100:
 			screen.blit(gordo_attack, [enemigo.x-40, enemigo.y-32.5])
 		elif enemigo.direccionx != 2:
 			animacion_gordo += 1
@@ -370,13 +404,13 @@ while True:
 			level = 2
 
 	#ANIMACIÓN HIKARU
-	if plataforma.y != 575 and ataque == 0:
+	if suelo == False and ataque == 0:
 		if plataforma.direccionx == 0:
 			screen.blit(hikaru_jump_, [plataforma.x-10, plataforma.y-20])
 		elif plataforma.direccionx == 1:
 			screen.blit(hikaru_jump, [plataforma.x-20, plataforma.y-20])
 
-	if quieto == True and correr == False and ataque == 0 and plataforma.y == 575:
+	if quieto == True and correr == False and ataque == 0 and suelo == True:
 		if plataforma.direccionx == 0:
 			if animacion_hikaru <= 100:
 				screen.blit(hikaru1_, [plataforma.x-10, plataforma.y-20])
@@ -392,13 +426,13 @@ while True:
 				if animacion_hikaru >= 200:
 					animacion_hikaru = 0
 	
-	if plataforma.direcciony == 0 and plataforma.y == 575 and quieto == False and ataque == 0:
+	if plataforma.direcciony == 0 and suelo == True and quieto == False and ataque == 0:
 		if plataforma.direccionx == 0:
 			screen.blit(hikaru_agachar_, [plataforma.x-10, plataforma.y-20])
 		elif plataforma.direccionx == 1:
 			screen.blit(hikaru_agachar, [plataforma.x-20, plataforma.y-20])
 
-	if correr == True and plataforma.y == 575:
+	if correr == True and suelo == True:
 		if plataforma.direccionx == 0:
 			if animacion_hikaru <= 50:
 				screen.blit(hikaru_run_, [plataforma.x-10, plataforma.y-20])
