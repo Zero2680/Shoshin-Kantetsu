@@ -212,144 +212,236 @@ class Boss(Objeto):
 					aleatorio3 = randrange(2,14)
 			ataque_plataforma = 0
 		if aleatorio1 != -1:
+			self.y = 3000
 			if aleatorio1 == 2 or aleatorio2 == 2 or aleatorio3 == 2:
-				screen.blit(ninja_preataque, (587.5, 499))
-				if cont_plataforma > 1000:
+				if 0 < cont_plataforma <= 300:
+					screen.blit(ninja_preataque, (587.5, 499))
+				elif 300 < cont_plataforma <= 400:
+					screen.blit(ninja_preataque2, (587.5, 499))
+				elif cont_plataforma > 400:
+					screen.blit(ninja_preataque3, (587.5, 499))
+				if cont_plataforma > 500:
 					if Personaje.check_colisiones(suelo2, plataforma) == True:
 						plataforma.vidas -= 10
 					if aleatorio1 == 2:
+						self.x = 620
+						self.y = 475
 						aleatorio1 = -1
 					elif aleatorio2 == 2:
 						aleatorio2 = -1
 					else:
 						aleatorio3 = -1
 			if aleatorio1 == 3 or aleatorio2 == 3 or aleatorio3 == 3:
-				screen.blit(ninja_preataque, (40, 499))
-				if cont_plataforma > 1000:
+				if 0 < cont_plataforma <= 300:
+					screen.blit(ninja_preataque, (40, 499))
+				elif 300 < cont_plataforma <= 400:
+					screen.blit(ninja_preataque2, (40, 499))
+				elif cont_plataforma > 400:
+					screen.blit(ninja_preataque3, (40, 499))
+				if cont_plataforma > 500:
 					if Personaje.check_colisiones(suelo3, plataforma) == True:
 						plataforma.vidas -= 10
 					if aleatorio1 == 3:
+						self.x = 72.5
+						self.y = 475
 						aleatorio1 = -1
 					elif aleatorio2 == 3:
 						aleatorio2 = -1
 					else:
 						aleatorio3 = -1
 			if aleatorio1 == 4 or aleatorio2 == 4 or aleatorio3 == 4:
-				screen.blit(ninja_preataque, (1140, 499))
-				if cont_plataforma > 1000:
+				if 0 < cont_plataforma <= 300:
+					screen.blit(ninja_preataque, (1140, 499))
+				elif 300 < cont_plataforma <= 400:
+					screen.blit(ninja_preataque2, (1140, 499))
+				elif cont_plataforma > 400:
+					screen.blit(ninja_preataque3, (1140, 499))
+				if cont_plataforma > 500:
 					if Personaje.check_colisiones(suelo4, plataforma) == True:
 						plataforma.vidas -= 10
 					if aleatorio1 == 4:
+						self.x = 1172.5
+						self.y = 475
 						aleatorio1 = -1
 					elif aleatorio2 == 4:
 						aleatorio2 = -1
 					else:
 						aleatorio3 = -1
 			if aleatorio1 == 5 or aleatorio2 == 5 or aleatorio3 == 5:
-				screen.blit(ninja_preataque, (307.5, 399))
-				if cont_plataforma > 1000:
+				if 0 < cont_plataforma <= 300:
+					screen.blit(ninja_preataque, (307.5, 399))
+				elif 300 < cont_plataforma <= 400:
+					screen.blit(ninja_preataque2, (307.5, 399))
+				elif cont_plataforma > 400:
+					screen.blit(ninja_preataque3, (307.5, 399))
+				if cont_plataforma > 500:
 					if Personaje.check_colisiones(suelo5, plataforma) == True:
 						plataforma.vidas -= 10
 					if aleatorio1 == 5:
+						self.x = 340
+						self.y = 375
 						aleatorio1 = -1
 					elif aleatorio2 == 5:
 						aleatorio2 = -1
 					else:
 						aleatorio3 = -1
 			if aleatorio1 == 6 or aleatorio2 == 6 or aleatorio3 == 6:
-				screen.blit(ninja_preataque, (867.5, 399))
-				if cont_plataforma > 1000:
+				if 0 < cont_plataforma <= 300:
+					screen.blit(ninja_preataque, (867.5, 399))
+				elif 300 < cont_plataforma <= 400:
+					screen.blit(ninja_preataque2, (867.5, 399))
+				elif cont_plataforma > 400:
+					screen.blit(ninja_preataque3, (867.5, 399))
+				if cont_plataforma > 500:
 					if Personaje.check_colisiones(suelo6, plataforma) == True:
 						plataforma.vidas -= 10
 					if aleatorio1 == 6:
+						self.x = 900
+						self.y = 375
 						aleatorio1 = -1
 					elif aleatorio2 == 6:
 						aleatorio2 = -1
 					else:
 						aleatorio3 = -1
 			if aleatorio1 == 7 or aleatorio2 == 7 or aleatorio3 == 7:
-				screen.blit(ninja_preataque, (587.5, 299))
-				if cont_plataforma > 1000:
+				if 0 < cont_plataforma <= 300:
+					screen.blit(ninja_preataque, (587.5, 299))
+				elif 300 < cont_plataforma <= 400:
+					screen.blit(ninja_preataque2, (587.5, 299))
+				elif cont_plataforma > 400:
+					screen.blit(ninja_preataque3, (587.5, 299))
+				if cont_plataforma > 500:
 					if Personaje.check_colisiones(suelo7, plataforma) == True:
 						plataforma.vidas -= 10
 					if aleatorio1 == 7:
+						self.x = 620
+						self.y = 275
 						aleatorio1 = -1
 					elif aleatorio2 == 7:
 						aleatorio2 = -1
 					else:
 						aleatorio3 = -1
 			if aleatorio1 == 8 or aleatorio2 == 8 or aleatorio3 == 8:
-				screen.blit(ninja_preataque, (40, 299))
-				if cont_plataforma > 1000:
+				if 0 < cont_plataforma <= 300:
+					screen.blit(ninja_preataque, (40, 299))
+				elif 300 < cont_plataforma <= 400:
+					screen.blit(ninja_preataque2, (40, 299))
+				elif cont_plataforma > 400:
+					screen.blit(ninja_preataque3, (40, 299))
+				if cont_plataforma > 500:
 					if Personaje.check_colisiones(suelo8, plataforma) == True:
 						plataforma.vidas -= 10
 					if aleatorio1 == 8:
+						self.x = 72.5
+						self.y = 275
 						aleatorio1 = -1
 					elif aleatorio2 == 8:
 						aleatorio2 = -1
 					else:
 						aleatorio3 = -1
 			if aleatorio1 == 9 or aleatorio2 == 9 or aleatorio3 == 9:
-				screen.blit(ninja_preataque, (1140, 299))
-				if cont_plataforma > 1000:
+				if 0 < cont_plataforma <= 300:
+					screen.blit(ninja_preataque, (1140, 299))
+				elif 300 < cont_plataforma <= 400:
+					screen.blit(ninja_preataque2, (1140, 299))
+				elif cont_plataforma > 400:
+					screen.blit(ninja_preataque3, (1140, 299))
+				if cont_plataforma > 500:
 					if Personaje.check_colisiones(suelo9, plataforma) == True:
 						plataforma.vidas -= 10
 					if aleatorio1 == 9:
+						self.x = 1172.5
+						self.y = 275
 						aleatorio1 = -1
 					elif aleatorio2 == 9:
 						aleatorio2 = -1
 					else:
 						aleatorio3 = -1
 			if aleatorio1 == 10 or aleatorio2 == 10 or aleatorio3 == 10:
-				screen.blit(ninja_preataque, (307.5, 199))
-				if cont_plataforma > 1000:
+				if 0 < cont_plataforma <= 300:
+					screen.blit(ninja_preataque, (307.5, 199))
+				elif 300 < cont_plataforma <= 400:
+					screen.blit(ninja_preataque2, (307.5, 199))
+				elif cont_plataforma > 400:
+					screen.blit(ninja_preataque3, (307.5, 199))
+				if cont_plataforma > 500:
 					if Personaje.check_colisiones(suelo10, plataforma) == True:
 						plataforma.vidas -= 10
 					if aleatorio1 == 10:
+						self.x = 340
+						self.y = 175
 						aleatorio1 = -1
 					elif aleatorio2 == 10:
 						aleatorio2 = -1
 					else:
 						aleatorio3 = -1
 			if aleatorio1 == 11 or aleatorio2 == 11 or aleatorio3 == 11:
-				screen.blit(ninja_preataque, (867.5, 199))
-				if cont_plataforma > 1000:
+				if 0 < cont_plataforma <= 300:
+					screen.blit(ninja_preataque, (867.5, 199))
+				elif 300 < cont_plataforma <= 400:
+					screen.blit(ninja_preataque2, (867.5, 199))
+				elif cont_plataforma > 400:
+					screen.blit(ninja_preataque3, (867.5, 199))
+				if cont_plataforma > 500:
 					if Personaje.check_colisiones(suelo11, plataforma) == True:
 						plataforma.vidas -= 10
 					if aleatorio1 == 11:
+						self.x = 900
+						self.y = 175
 						aleatorio1 = -1
 					elif aleatorio2 == 11:
 						aleatorio2 = -1
 					else:
 						aleatorio3 = -1
 			if aleatorio1 == 12 or aleatorio2 == 12 or aleatorio3 == 12:
-				screen.blit(ninja_preataque, (587.5, 99))
-				if cont_plataforma > 1000:
+				if 0 < cont_plataforma <= 300:
+					screen.blit(ninja_preataque, (587.5, 99))
+				elif 300 < cont_plataforma <= 400:
+					screen.blit(ninja_preataque2, (587.5, 99))
+				elif cont_plataforma > 400:
+					screen.blit(ninja_preataque3, (587.5, 99))
+				if cont_plataforma > 500:
 					if Personaje.check_colisiones(suelo12, plataforma) == True:
 						plataforma.vidas -= 10
 					if aleatorio1 == 12:
+						self.x = 620
+						self.y = 75
 						aleatorio1 = -1
 					elif aleatorio2 == 12:
 						aleatorio2 = -1
 					else:
 						aleatorio3 = -1
 			if aleatorio1 == 13 or aleatorio2 == 13 or aleatorio3 == 13:
-				screen.blit(ninja_preataque, (40, 99))
-				if cont_plataforma > 1000:
+				if 0 < cont_plataforma <= 300:
+					screen.blit(ninja_preataque, (40, 99))
+				elif 300 < cont_plataforma <= 400:
+					screen.blit(ninja_preataque2, (40, 99))
+				elif cont_plataforma > 400:
+					screen.blit(ninja_preataque3, (40, 99))
+				if cont_plataforma > 500:
 					if Personaje.check_colisiones(suelo13, plataforma) == True:
 						plataforma.vidas -= 10
 					if aleatorio1 == 13:
+						self.x = 72.5
+						self.y = 75
 						aleatorio1 = -1
 					elif aleatorio2 == 13:
 						aleatorio2 = -1
 					else:
 						aleatorio3 = -1
 			if aleatorio1 == 14 or aleatorio2 == 14 or aleatorio3 == 14:
-				screen.blit(ninja_preataque, (1140, 99))
-				if cont_plataforma > 1000:
+				if 0 < cont_plataforma <= 300:
+					screen.blit(ninja_preataque, (1140, 99))
+				elif 300 < cont_plataforma <= 400:
+					screen.blit(ninja_preataque2, (1140, 99))
+				elif cont_plataforma > 400:
+					screen.blit(ninja_preataque3, (1140, 99))
+				if cont_plataforma > 500:
 					if Personaje.check_colisiones(suelo14, plataforma) == True:
 						plataforma.vidas -= 10
 					if aleatorio1 == 14:
+						self.x = 1172.5
+						self.y = 75
 						aleatorio1 = -1
 					elif aleatorio2 == 14:
 						aleatorio2 = -1
@@ -415,19 +507,19 @@ enemigo = Boss(100, 550, 30, 50, (255,0,0), 100, 1, 2)
 level = 0
 z = -1
 suelo1 = Suelo(0, 599, 1280, 300, (0, 0, 0), 0, 0, 0)
-suelo2 = Suelo(587.5, 3000, 100, 10, (0, 0, 0), 0, 0, 0)
-suelo3 = Suelo(40, 3000, 100, 10, (0, 0, 0), 0, 0, 0)
-suelo4 = Suelo(1140, 3000, 100, 10, (0, 0, 0), 0, 0, 0)
-suelo5 = Suelo(307.5, 3000, 100, 10, (0, 0, 0), 0, 0, 0)
-suelo6 = Suelo(867.5, 3000, 100, 10, (0, 0, 0), 0, 0, 0)
-suelo7 = Suelo(587.5, 3000, 100, 10, (0, 0, 0), 0, 0, 0)
-suelo8 = Suelo(40, 3000, 100, 10, (0, 0, 0), 0, 0, 0)
-suelo9 = Suelo(1140, 3000, 100, 10, (0, 0, 0), 0, 0, 0)
-suelo10 = Suelo(307.5, 3000, 100, 10, (0, 0, 0), 0, 0, 0)
-suelo11 = Suelo(867.5, 3000, 100, 10, (0, 0, 0), 0, 0, 0)
-suelo12 = Suelo(587.5, 3000, 100, 10, (0, 0, 0), 0, 0, 0)
-suelo13 = Suelo(40, 3000, 100, 10, (0, 0, 0), 0, 0, 0)
-suelo14 = Suelo(1140, 3000, 100, 10, (0, 0, 0), 0, 0, 0)
+suelo2 = Suelo(587.5, 3000, 100, 1, (0, 0, 255), 0, 0, 0)
+suelo3 = Suelo(40, 3000, 100, 1, (0, 0, 255), 0, 0, 0)
+suelo4 = Suelo(1140, 3000, 100, 1, (0, 0, 255), 0, 0, 0)
+suelo5 = Suelo(307.5, 3000, 100, 1, (0, 0, 255), 0, 0, 0)
+suelo6 = Suelo(867.5, 3000, 100, 1, (0, 0, 255), 0, 0, 0)
+suelo7 = Suelo(587.5, 3000, 100, 1, (0, 0, 255), 0, 0, 0)
+suelo8 = Suelo(40, 3000, 100, 1, (0, 0, 255), 0, 0, 0)
+suelo9 = Suelo(1140, 3000, 100, 1, (0, 0, 255), 0, 0, 0)
+suelo10 = Suelo(307.5, 3000, 100, 1, (0, 0, 255), 0, 0, 0)
+suelo11 = Suelo(867.5, 3000, 100, 1, (0, 0, 255), 0, 0, 0)
+suelo12 = Suelo(587.5, 3000, 100, 1, (0, 0, 255), 0, 0, 0)
+suelo13 = Suelo(40, 3000, 100, 1, (0, 0, 255), 0, 0, 0)
+suelo14 = Suelo(1140, 3000, 100, 1, (0, 0, 255), 0, 0, 0)
 fondo1 = transform.scale(image.load("shoshin-kantetsu_images/fondo1.jpg").convert(), (1280, 720))
 fondo2 = transform.scale(image.load("shoshin-kantetsu_images/fondo2.jpg").convert(), (1280, 720))
 fondo3 = transform.scale(image.load("shoshin-kantetsu_images/fondo3.jpg").convert(), (1280, 720))
@@ -467,6 +559,8 @@ vida_boss = transform.scale(image.load("shoshin-kantetsu_images/vida_boss.png"),
 ninja1 = transform.scale(image.load("shoshin-kantetsu_images/ninja1.png"), (75, 150))
 ninja2 = transform.scale(image.load("shoshin-kantetsu_images/ninja2.png"), (75, 150))
 ninja_preataque = transform.scale(image.load("shoshin-kantetsu_images/ninja_preataque.png"), (100, 100))
+ninja_preataque2 = transform.scale(image.load("shoshin-kantetsu_images/ninja_preataque2.png"), (100, 100))
+ninja_preataque3 = transform.scale(image.load("shoshin-kantetsu_images/ninja_preataque3.png"), (100, 100))
 animacion_hikaru = 0
 animacion_gordo = 0
 save_vida = 90
@@ -496,7 +590,7 @@ while True:
 		aleatorio1 = -1
 		aleatorio2 = -1
 		aleatorio3 = -1
-		cont_plataforma = 1100
+		cont_plataforma = 600
 		#cut_scene_manager.start_cut_scene(CutSceneZero(plataforma))
 		if cut_scene_manager.cut_scene is None:
 			z = 0
@@ -524,9 +618,14 @@ while True:
 		suelo12.y = 199
 		suelo13.y = 199
 		suelo14.y = 199
+		plataforma.x = 350
+		plataforma.y = 475
+		enemigo.x = 900
+		enemigo.y = 175
 		z = 3
 
 	animacion_hikaru += 1
+	#print(plataforma.x)
 	#print(plataforma.y)
 
 	if cut_scene_manager.cut_scene is None:
@@ -609,7 +708,7 @@ while True:
 		else:
 			suelo = False
 		enemigo.Ataque_Plataforma()
-		if cont_plataforma < 1100:
+		if cont_plataforma < 600:
 			cont_plataforma += 1
 		suelo2.DibujarObjeto()
 		suelo3.DibujarObjeto()
@@ -625,9 +724,9 @@ while True:
 		suelo13.DibujarObjeto()
 		suelo14.DibujarObjeto()
 		if enemigo.x <= 640:
-			screen.blit(ninja1, [enemigo.x-40, enemigo.y-32.5])
+			screen.blit(ninja1, [enemigo.x-20, enemigo.y-25])
 		else:
-			screen.blit(ninja2, [enemigo.x-40, enemigo.y-32.5])
+			screen.blit(ninja2, [enemigo.x-25, enemigo.y-25])
 		if enemigo.vidas <= 0:
 			level = 3
 
