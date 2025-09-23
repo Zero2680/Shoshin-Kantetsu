@@ -93,7 +93,6 @@ class Personaje(Objeto):
 				self.x += 1
 		if keys[K_a] == 0 and keys[K_d] == 0:
 			correr = False
-		self.DibujarObjeto()
 
 	def Ataque(self):
 		global quieto, ataque, time_ataque
@@ -127,6 +126,14 @@ class Personaje(Objeto):
 		largosprite2 = sprite2.largo
 		if (ysprite1 + largosprite1) > ysprite2 and ysprite1 < (ysprite2 + largosprite2) and (xsprite1 + anchosprite1) > xsprite2 and xsprite1 < (xsprite2 + anchosprite2):
 			return True
+	
+	def check_orbe(suelo, orbe):
+		if orbe.x < suelo.x + (suelo.ancho / 2):
+			if Personaje.check_colisiones(suelo, orbe) == True:
+				orbe.direccionx = 0
+		else:
+			if Personaje.check_colisiones(suelo, orbe) == True:
+				orbe.direccionx = 1
 
 class Espada(Objeto):
 	def __init__(self, x, y, ancho, largo, color , vidas, direccionx, direcciony):
@@ -161,7 +168,6 @@ class Espada(Objeto):
 				ataque_espada = 2
 			elif ataque_espada == 2:
 				ataque_espada = 0
-		self.DibujarObjeto()
 
 class Boss(Objeto):
 	def __init__(self, x, y, ancho, largo, color , vidas, direccionx, direcciony):
@@ -181,13 +187,13 @@ class Boss(Objeto):
 			plataforma.vidas -= 10
 			hit = True
 		if self.direccionx == 0:
-			self.x -= 2
-			if self.x < 80:
+			self.x -= 1
+			if self.x < 130:
 				self.direccionx = 2
 				hit = False
 		if self.direccionx == 1:
-			self.x += 2
-			if self.x > 1200:
+			self.x += 1
+			if self.x > 1150:
 				self.direccionx = 2
 				hit = False
 
@@ -200,19 +206,49 @@ class Boss(Objeto):
 
 	def Terremoto_Espada2(self):
 		self.espada2.Caida_Espada(self.disparo5, self.disparo6)
+
+	def Ataque_Orbe(self, enemigo):
+		self.disparo1.Movimiento_Orbe(enemigo)
+		self.disparo2.Movimiento_Orbe(enemigo)
+		self.disparo3.Movimiento_Orbe(enemigo)
+		self.disparo4.Movimiento_Orbe(enemigo)
+		self.disparo5.Movimiento_Orbe(enemigo)
+		self.disparo6.Movimiento_Orbe(enemigo)
 	
+	def Ataque_Mago(self, plataforma, suelo2, suelo3, suelo4, suelo5, suelo6):
+		global ataque_mago, aleatorio1, aleatorio2, aleatorio3, cont_mago
+		if ataque_mago > 0:
+			aleatorio1 = randrange(2,7)
+			if ataque_mago > 1:
+				aleatorio2 = randrange(2,7)
+				if ataque_mago > 2:
+					aleatorio3 = randrange(2,7)
+			self.x = 3000
+			ataque_mago = 0
+		if aleatorio1 != -1:
+			if aleatorio1 == 2 or aleatorio2 == 2 or aleatorio3 == 2:
+				suelo2.golpear(plataforma, self, self.disparo1, self.disparo2, self.disparo3, self.disparo4, self.disparo5, self.disparo6)
+			if aleatorio1 == 3 or aleatorio2 == 3 or aleatorio3 == 3:
+				suelo3.golpear(plataforma, self, self.disparo1, self.disparo2, self.disparo3, self.disparo4, self.disparo5, self.disparo6)
+			if aleatorio1 == 4 or aleatorio2 == 4 or aleatorio3 == 4:
+				suelo4.golpear(plataforma, self, self.disparo1, self.disparo2, self.disparo3, self.disparo4, self.disparo5, self.disparo6)					
+			if aleatorio1 == 5 or aleatorio2 == 5 or aleatorio3 == 5:
+				suelo5.golpear(plataforma, self, self.disparo1, self.disparo2, self.disparo3, self.disparo4, self.disparo5, self.disparo6)
+			if aleatorio1 == 6 or aleatorio2 == 6 or aleatorio3 == 6:
+				suelo6.golpear(plataforma, self, self.disparo1, self.disparo2, self.disparo3, self.disparo4, self.disparo5, self.disparo6)
+
 	def Ataque_Plataforma(self):
 		global ataque_plataforma, aleatorio1, aleatorio2, aleatorio3, cont_plataforma
 		if ataque_plataforma > 0:
 			cont_plataforma = 0
-			aleatorio1 = randrange(2, 14)
+			aleatorio3 = randrange(2, 14)
 			if ataque_plataforma > 1:
 				aleatorio2 = randrange(2,14)
 				if ataque_plataforma > 2:
-					aleatorio3 = randrange(2,14)
+					aleatorio1 = randrange(2,14)
+					self.y = 3000
 			ataque_plataforma = 0
-		if aleatorio1 != -1:
-			self.y = 3000
+		if aleatorio3 != -1:
 			if aleatorio1 == 2 or aleatorio2 == 2 or aleatorio3 == 2:
 				if 0 < cont_plataforma <= 300:
 					screen.blit(ninja_preataque, (587.5, 499))
@@ -222,7 +258,7 @@ class Boss(Objeto):
 					screen.blit(ninja_preataque3, (587.5, 499))
 				if cont_plataforma > 500:
 					if Personaje.check_colisiones(suelo2, plataforma) == True:
-						plataforma.vidas -= 10
+						plataforma.vidas -= 25
 					if aleatorio1 == 2:
 						self.x = 620
 						self.y = 475
@@ -240,7 +276,7 @@ class Boss(Objeto):
 					screen.blit(ninja_preataque3, (40, 499))
 				if cont_plataforma > 500:
 					if Personaje.check_colisiones(suelo3, plataforma) == True:
-						plataforma.vidas -= 10
+						plataforma.vidas -= 25
 					if aleatorio1 == 3:
 						self.x = 72.5
 						self.y = 475
@@ -258,7 +294,7 @@ class Boss(Objeto):
 					screen.blit(ninja_preataque3, (1140, 499))
 				if cont_plataforma > 500:
 					if Personaje.check_colisiones(suelo4, plataforma) == True:
-						plataforma.vidas -= 10
+						plataforma.vidas -= 25
 					if aleatorio1 == 4:
 						self.x = 1172.5
 						self.y = 475
@@ -276,7 +312,7 @@ class Boss(Objeto):
 					screen.blit(ninja_preataque3, (307.5, 399))
 				if cont_plataforma > 500:
 					if Personaje.check_colisiones(suelo5, plataforma) == True:
-						plataforma.vidas -= 10
+						plataforma.vidas -= 25
 					if aleatorio1 == 5:
 						self.x = 340
 						self.y = 375
@@ -294,7 +330,7 @@ class Boss(Objeto):
 					screen.blit(ninja_preataque3, (867.5, 399))
 				if cont_plataforma > 500:
 					if Personaje.check_colisiones(suelo6, plataforma) == True:
-						plataforma.vidas -= 10
+						plataforma.vidas -= 25
 					if aleatorio1 == 6:
 						self.x = 900
 						self.y = 375
@@ -312,7 +348,7 @@ class Boss(Objeto):
 					screen.blit(ninja_preataque3, (587.5, 299))
 				if cont_plataforma > 500:
 					if Personaje.check_colisiones(suelo7, plataforma) == True:
-						plataforma.vidas -= 10
+						plataforma.vidas -= 25
 					if aleatorio1 == 7:
 						self.x = 620
 						self.y = 275
@@ -330,7 +366,7 @@ class Boss(Objeto):
 					screen.blit(ninja_preataque3, (40, 299))
 				if cont_plataforma > 500:
 					if Personaje.check_colisiones(suelo8, plataforma) == True:
-						plataforma.vidas -= 10
+						plataforma.vidas -= 25
 					if aleatorio1 == 8:
 						self.x = 72.5
 						self.y = 275
@@ -348,7 +384,7 @@ class Boss(Objeto):
 					screen.blit(ninja_preataque3, (1140, 299))
 				if cont_plataforma > 500:
 					if Personaje.check_colisiones(suelo9, plataforma) == True:
-						plataforma.vidas -= 10
+						plataforma.vidas -= 25
 					if aleatorio1 == 9:
 						self.x = 1172.5
 						self.y = 275
@@ -366,7 +402,7 @@ class Boss(Objeto):
 					screen.blit(ninja_preataque3, (307.5, 199))
 				if cont_plataforma > 500:
 					if Personaje.check_colisiones(suelo10, plataforma) == True:
-						plataforma.vidas -= 10
+						plataforma.vidas -= 25
 					if aleatorio1 == 10:
 						self.x = 340
 						self.y = 175
@@ -384,7 +420,7 @@ class Boss(Objeto):
 					screen.blit(ninja_preataque3, (867.5, 199))
 				if cont_plataforma > 500:
 					if Personaje.check_colisiones(suelo11, plataforma) == True:
-						plataforma.vidas -= 10
+						plataforma.vidas -= 25
 					if aleatorio1 == 11:
 						self.x = 900
 						self.y = 175
@@ -402,7 +438,7 @@ class Boss(Objeto):
 					screen.blit(ninja_preataque3, (587.5, 99))
 				if cont_plataforma > 500:
 					if Personaje.check_colisiones(suelo12, plataforma) == True:
-						plataforma.vidas -= 10
+						plataforma.vidas -= 25
 					if aleatorio1 == 12:
 						self.x = 620
 						self.y = 75
@@ -420,7 +456,7 @@ class Boss(Objeto):
 					screen.blit(ninja_preataque3, (40, 99))
 				if cont_plataforma > 500:
 					if Personaje.check_colisiones(suelo13, plataforma) == True:
-						plataforma.vidas -= 10
+						plataforma.vidas -= 25
 					if aleatorio1 == 13:
 						self.x = 72.5
 						self.y = 75
@@ -438,7 +474,7 @@ class Boss(Objeto):
 					screen.blit(ninja_preataque3, (1140, 99))
 				if cont_plataforma > 500:
 					if Personaje.check_colisiones(suelo14, plataforma) == True:
-						plataforma.vidas -= 10
+						plataforma.vidas -= 25
 					if aleatorio1 == 14:
 						self.x = 1172.5
 						self.y = 75
@@ -446,7 +482,47 @@ class Boss(Objeto):
 					elif aleatorio2 == 14:
 						aleatorio2 = -1
 					else:
-						aleatorio3 = -1	
+						aleatorio3 = -1
+		
+	def Colores(self):
+		global color, choice, racha, color_x, color_y
+		color_y += 0.25
+		if self.vidas < 75:
+			color_y += 0.25
+			if self.vidas < 50:
+				color_y += 0.25
+				if self.vidas < 25:
+					color_y += 0.25
+		if color == 8:
+			screen.blit(rojo, [color_x, color_y])
+		elif color == 9:
+			screen.blit(azul, [color_x, color_y])
+		elif color == 10:
+			screen.blit(blanco, [color_x, color_y])
+		elif color == 11:
+			screen.blit(negro, [color_x, color_y])
+		elif color == 12:
+			screen.blit(dorado, [color_x, color_y])
+		if (color != choice and choice != 0) or color_y == 750:
+			plataforma.vidas -= 10
+			racha = 0
+			choice = 0
+			color = randrange(8,13)
+			color_x = randrange(0, 1230)
+			color_y = 0
+		if color == choice:
+			racha += 1
+			choice = 0
+			color = randrange(8,13)
+			color_x = randrange(0, 1230)
+			color_y = 0
+		if racha == 5:
+			self.vidas -= 10
+			racha = 0
+			choice = 0
+			color = randrange(8,13)
+			color_x = randrange(0, 1230)
+			color_y = 0
 
 class Disparo(Objeto):
 	def __init__(self, x, y, ancho, largo, color , vidas, direccionx, direcciony):
@@ -457,14 +533,14 @@ class Disparo(Objeto):
 			plataforma.vidas -= 10
 			self.x = 1380
 		if self.x < 1380:
-			self.x += 2
+			self.x += 1
 	
 	def Movimiento_Terremoto2(self):
 		if Personaje.check_colisiones(self, plataforma) == True:
 			plataforma.vidas -= 10
 			self.x = -100
 		if self.x > -100:
-			self.x -= 2
+			self.x -= 1
 	
 	def Caida_Espada(self, disparo1, disparo2):
 		if Personaje.check_colisiones(self, plataforma) == True:
@@ -487,6 +563,32 @@ class Disparo(Objeto):
 		if disparo1.x == 1380 and disparo2.x == -100 and self.vidas == 1:
 			self.y = -100
 			self.vidas = 0
+	
+	def Movimiento_Orbe(self, enemigo):
+		if self.x == 3000 and enemigo.x != 3000:
+			self.x = enemigo.x
+			self.y = enemigo.y
+		if self.x < 3000:
+			if self.direccionx == 0:
+				self.x -= 2
+			if self.direccionx == 1:
+				self.x += 2
+			if self.direcciony == 0:
+				self.y -= 2
+			if self.direcciony == 1:
+				self.y += 2
+			if self.x <= 0:
+				self.direccionx = 1
+			if self.x >= 1260:
+				self.direccionx = 0
+			if self.y <= 0:
+				self.direcciony = 1
+			if self.y >= 600:
+				self.direcciony = 0
+			if Personaje.check_colisiones(self, plataforma) == True:
+				plataforma.vidas -= 10
+				self.x = enemigo.x
+				self.y = enemigo.y
 
 class Suelo(Objeto):
 	def __init__(self, x, y, ancho, largo, color , vidas, direccionx, direcciony):
@@ -495,6 +597,42 @@ class Suelo(Objeto):
 	def check_suelo(self, sprite1):
 		if (sprite1.y + sprite1.largo) > self.y and sprite1.y < (self.y + self.largo) and (sprite1.x + sprite1.ancho) > self.x and sprite1.x < (self.x + self.ancho):
 			return True
+	
+	def golpear(self, plataforma, enemigo, orbe1, orbe2, orbe3, orbe4, orbe5, orbe6):
+		global cont_mago, aleatorio1, aleatorio2, aleatorio3, ataque_mago
+		self.largo = 1000
+		self.color = (0,255,0)
+		if 0 < cont_mago <= 200:
+			self.y -= 0.25
+		elif 50 < cont_mago <= 400:
+			self.y += 0.25
+		elif self.y > 0 and 400 < cont_mago <= 800:
+			self.y -= 2
+		elif cont_mago > 5000:
+			if self.y == 599:
+				self.color = (0, 0, 0)
+				enemigo.x = self.x
+				if cont_mago > 10000:
+					cont_mago = 0
+					ataque_mago = 1
+					if enemigo.vidas <= 60:
+						ataque_mago = 2
+						if enemigo.vidas <= 20:
+							ataque_mago = 3
+					aleatorio1 = -1
+					aleatorio2 = -1
+					aleatorio3 = -1
+			else:
+				self.y += 1
+		if self.y <= 0:
+			if Personaje.check_colisiones(self, plataforma) == True:
+				plataforma.vidas = 0
+			Personaje.check_orbe(self, orbe1)
+			Personaje.check_orbe(self, orbe2)
+			Personaje.check_orbe(self, orbe3)
+			Personaje.check_orbe(self, orbe4)
+			Personaje.check_orbe(self, orbe5)
+			Personaje.check_orbe(self, orbe6)
 
 def barra_hp(screen, x, y, hp, color):
 	largo = 165
@@ -507,24 +645,25 @@ enemigo = Boss(100, 550, 30, 50, (255,0,0), 100, 1, 2)
 level = 0
 z = -1
 suelo1 = Suelo(0, 599, 1280, 300, (0, 0, 0), 0, 0, 0)
-suelo2 = Suelo(587.5, 3000, 100, 1, (0, 0, 255), 0, 0, 0)
-suelo3 = Suelo(40, 3000, 100, 1, (0, 0, 255), 0, 0, 0)
-suelo4 = Suelo(1140, 3000, 100, 1, (0, 0, 255), 0, 0, 0)
-suelo5 = Suelo(307.5, 3000, 100, 1, (0, 0, 255), 0, 0, 0)
-suelo6 = Suelo(867.5, 3000, 100, 1, (0, 0, 255), 0, 0, 0)
-suelo7 = Suelo(587.5, 3000, 100, 1, (0, 0, 255), 0, 0, 0)
-suelo8 = Suelo(40, 3000, 100, 1, (0, 0, 255), 0, 0, 0)
-suelo9 = Suelo(1140, 3000, 100, 1, (0, 0, 255), 0, 0, 0)
-suelo10 = Suelo(307.5, 3000, 100, 1, (0, 0, 255), 0, 0, 0)
-suelo11 = Suelo(867.5, 3000, 100, 1, (0, 0, 255), 0, 0, 0)
-suelo12 = Suelo(587.5, 3000, 100, 1, (0, 0, 255), 0, 0, 0)
-suelo13 = Suelo(40, 3000, 100, 1, (0, 0, 255), 0, 0, 0)
-suelo14 = Suelo(1140, 3000, 100, 1, (0, 0, 255), 0, 0, 0)
+suelo2 = Suelo(587.5, 3000, 100, 1, (0, 0, 0), 0, 0, 0)
+suelo3 = Suelo(40, 3000, 100, 1, (0, 0, 0), 0, 0, 0)
+suelo4 = Suelo(1140, 3000, 100, 1, (0, 0, 0), 0, 0, 0)
+suelo5 = Suelo(307.5, 3000, 100, 1, (0, 0, 0), 0, 0, 0)
+suelo6 = Suelo(867.5, 3000, 100, 1, (0, 0, 0), 0, 0, 0)
+suelo7 = Suelo(587.5, 3000, 100, 1, (0, 0, 0), 0, 0, 0)
+suelo8 = Suelo(40, 3000, 100, 1, (0, 0, 0), 0, 0, 0)
+suelo9 = Suelo(1140, 3000, 100, 1, (0, 0, 0), 0, 0, 0)
+suelo10 = Suelo(307.5, 3000, 100, 1, (0, 0, 0), 0, 0, 0)
+suelo11 = Suelo(867.5, 3000, 100, 1, (0, 0, 0), 0, 0, 0)
+suelo12 = Suelo(587.5, 3000, 100, 1, (0, 0, 0), 0, 0, 0)
+suelo13 = Suelo(40, 3000, 100, 1, (0, 0, 0), 0, 0, 0)
+suelo14 = Suelo(1140, 3000, 100, 1, (0, 0, 0), 0, 0, 0)
 fondo1 = transform.scale(image.load("shoshin-kantetsu_images/fondo1.jpg").convert(), (1280, 720))
 fondo2 = transform.scale(image.load("shoshin-kantetsu_images/fondo2.jpg").convert(), (1280, 720))
 fondo3 = transform.scale(image.load("shoshin-kantetsu_images/fondo3.jpg").convert(), (1280, 720))
 fondo4 = transform.scale(image.load("shoshin-kantetsu_images/fondo4.jpg").convert(), (1280, 720))
 fondo5 = transform.scale(image.load("shoshin-kantetsu_images/fondo5.jpg").convert(), (1280, 720))
+fondo6 = transform.scale(image.load("shoshin-kantetsu_images/fondo6.jpg").convert(), (1280, 720))
 hikaru1 = transform.scale(image.load("shoshin-kantetsu_images/hikaru1.png"), (50, 50))
 hikaru1_ = transform.scale(image.load("shoshin-kantetsu_images/hikaru1_.png"), (50, 50))
 hikaru2 = transform.scale(image.load("shoshin-kantetsu_images/hikaru2.png"), (50, 50))
@@ -556,20 +695,38 @@ slash = transform.scale(image.load("shoshin-kantetsu_images/slash.png"), (100, 1
 slash_ = transform.scale(image.load("shoshin-kantetsu_images/slash_.png"), (100, 100))
 vida_hikaru = transform.scale(image.load("shoshin-kantetsu_images/vida_hikaru.png"), (300, 300))
 vida_boss = transform.scale(image.load("shoshin-kantetsu_images/vida_boss.png"), (300, 300))
-ninja1 = transform.scale(image.load("shoshin-kantetsu_images/ninja1.png"), (75, 150))
-ninja2 = transform.scale(image.load("shoshin-kantetsu_images/ninja2.png"), (75, 150))
+ninja1 = transform.scale(image.load("shoshin-kantetsu_images/ninja1_1.png"), (75, 150))
+ninja2 = transform.scale(image.load("shoshin-kantetsu_images/ninja2_1.png"), (75, 150))
 ninja_preataque = transform.scale(image.load("shoshin-kantetsu_images/ninja_preataque.png"), (100, 100))
 ninja_preataque2 = transform.scale(image.load("shoshin-kantetsu_images/ninja_preataque2.png"), (100, 100))
 ninja_preataque3 = transform.scale(image.load("shoshin-kantetsu_images/ninja_preataque3.png"), (100, 100))
+columna = transform.scale(image.load("shoshin-kantetsu_images/columna.png"), (120, 250))
+columna_vieja = transform.scale(image.load("shoshin-kantetsu_images/columna_vieja.png"), (120, 500))
+estatua = transform.scale(image.load("shoshin-kantetsu_images/estatua.png"), (96, 164))
+estatua_rojo = transform.scale(image.load("shoshin-kantetsu_images/estatua_rojo.png"), (96, 164))
+estatua_azul = transform.scale(image.load("shoshin-kantetsu_images/estatua_azul.png"), (96, 164))
+estatua_negro = transform.scale(image.load("shoshin-kantetsu_images/estatua_negro.png"), (96, 164))
+estatua_blanco = transform.scale(image.load("shoshin-kantetsu_images/estatua_blanco.png"), (96, 164))
+estatua_dorado = transform.scale(image.load("shoshin-kantetsu_images/estatua_dorado.png"), (96, 164))
+rojo = transform.scale(image.load("shoshin-kantetsu_images/rojo.png"), (50, 50))
+azul = transform.scale(image.load("shoshin-kantetsu_images/azul.png"), (50, 50))
+negro = transform.scale(image.load("shoshin-kantetsu_images/negro.png"), (50, 50))
+blanco = transform.scale(image.load("shoshin-kantetsu_images/blanco.png"), (50, 50))
+dorado = transform.scale(image.load("shoshin-kantetsu_images/dorado.png"), (50, 50))
+mago1 = transform.scale(image.load("shoshin-kantetsu_images/mago1.png"), (100, 100))
+mago2 = transform.scale(image.load("shoshin-kantetsu_images/mago2.png"), (100, 100))
+orbe = transform.scale(image.load("shoshin-kantetsu_images/orbe.png"), (50, 50))
 animacion_hikaru = 0
 animacion_gordo = 0
+animacion_ninja = 3
 save_vida = 90
 level = 0
+retry = False
 fondo = fondo2
 cut_scene_manager = CutSceneManager(screen)
 
 while True:
-	global salto, angulo, x_jump, salto_doble, w, quieto, correr, ataque, ataque_espada, time_ataque, terremoto, hit, suelo, x_sup, jump, ataque_plataforma, aleatorio1, aleatorio2, aleatorio3, cont_plataforma
+	global salto, angulo, x_jump, salto_doble, w, quieto, correr, ataque, ataque_espada, time_ataque, terremoto, hit, suelo, x_sup, jump, ataque_plataforma, aleatorio1, aleatorio2, aleatorio3, cont_plataforma, color, choice, racha, ataque_mago, cont_mago
 	if z == -1:
 		salto = False
 		angulo = 0.0
@@ -591,6 +748,13 @@ while True:
 		aleatorio2 = -1
 		aleatorio3 = -1
 		cont_plataforma = 600
+		color = randrange(8, 13)
+		choice = 0
+		racha = 0
+		color_x = randrange(0, 1230)
+		color_y = 0
+		ataque_mago = 1
+		cont_mago = 0
 		#cut_scene_manager.start_cut_scene(CutSceneZero(plataforma))
 		if cut_scene_manager.cut_scene is None:
 			z = 0
@@ -598,6 +762,24 @@ while True:
 		level = 1
 		z = 1
 	if level == 1 and z == 1:
+		plataforma.vidas = 100
+		plataforma.x = 130
+		plataforma.y = 576
+		enemigo.vidas = 100
+		save_vida = 90
+		enemigo.x = 1150
+		enemigo.y = 550
+		terremoto = True
+		enemigo.direccionx = 0
+		enemigo.espada1.y = -100
+		enemigo.espada2.y = -100
+		enemigo.disparo1.x = 1380
+		enemigo.disparo2.x = -100
+		enemigo.disparo3.x = 1380
+		enemigo.disparo4.x = -100
+		enemigo.disparo5.x = 1380
+		enemigo.disparo6.x = -100
+		cut_scene_manager.cut_scenes_complete = []
 		z = 2
 	if level == 2 and z == 2:
 		fondo = fondo3
@@ -618,65 +800,167 @@ while True:
 		suelo12.y = 199
 		suelo13.y = 199
 		suelo14.y = 199
+		plataforma.vidas = 100
 		plataforma.x = 350
 		plataforma.y = 475
+		enemigo.vidas = 100
+		save_vida = 90
 		enemigo.x = 900
 		enemigo.y = 175
+		ninja = 3
+		cut_scene_manager.cut_scenes_complete = []
 		z = 3
+	if level == 3 and z == 3:
+		fondo = fondo4
+		suelo1.y = 599
+		suelo2.y = 3000
+		suelo3.y = 3000
+		suelo4.y = 3000
+		suelo5.y = 3000
+		suelo6.y = 3000
+		suelo7.y = 449
+		suelo8.y = 149
+		suelo9.y = 149
+		suelo10.y = 299
+		suelo11.y = 299
+		suelo12.y = 149
+		suelo13.y = 3000
+		suelo14.y = 3000
+		enemigo.vidas = 100
+		enemigo.x = 3000
+		plataforma.vidas = 100
+		plataforma.x = 130
+		plataforma.y = 575
+		cut_scene_manager.cut_scenes_complete = []
+		z = 4
+	if level == 4 and z == 4:
+		fondo = fondo5
+		suelo1.y = 3000
+		suelo2.x = 0
+		suelo2.y = 599
+		suelo2.ancho = 256
+		suelo2.largo = 300
+		suelo3.x = 256
+		suelo3.y = 599
+		suelo3.ancho = 256
+		suelo3.largo = 300
+		suelo4.x = 512
+		suelo4.y = 599
+		suelo4.ancho = 256
+		suelo4.largo = 300
+		suelo5.x = 768
+		suelo5.y = 599
+		suelo5.ancho = 256
+		suelo5.largo = 300
+		suelo6.x = 1024
+		suelo6.y = 599
+		suelo6.ancho = 256
+		suelo6.largo = 300
+		suelo7.y = 3000
+		suelo8.y = 3000
+		suelo9.y = 3000
+		suelo10.y = 3000
+		suelo11.y = 3000
+		suelo12.y = 3000
+		enemigo.vidas = 100
+		enemigo.x = 1150
+		enemigo.y = 550
+		plataforma.vidas = 100
+		plataforma.x = 130
+		plataforma.y = 576
+		enemigo.disparo1.largo = 20
+		enemigo.disparo1.ancho = 20
+		enemigo.disparo2.largo = 20
+		enemigo.disparo2.ancho = 20
+		enemigo.disparo1.x = enemigo.x
+		enemigo.disparo1.direccionx = 0
+		enemigo.disparo1.direcciony = 1
+		enemigo.disparo2.x = enemigo.x
+		enemigo.disparo2.direccionx = 1
+		enemigo.disparo2.direcciony = 0
+		enemigo.disparo3.x = 5000
+		enemigo.disparo3.direccionx = 0
+		enemigo.disparo3.direcciony = 1
+		enemigo.disparo4.x = 5000
+		enemigo.disparo4.direccionx = 1
+		enemigo.disparo4.direcciony = 0
+		enemigo.disparo5.x = 5000
+		enemigo.disparo5.direccionx = 0
+		enemigo.disparo5.direcciony = 1
+		enemigo.disparo6.x = 5000
+		enemigo.disparo6.direccionx = 1
+		enemigo.disparo6.direcciony = 0
+		aleatorio1 = 4
+		aleatorio2 = -1
+		aleatorio3 = -1
+		cont_mago = 0
+		ataque_mago = 1
+		cut_scene_manager.cut_scenes_complete = []
+		z = 5
+	if level == 5 and z == 5:
+		fondo = fondo6
+		suelo1.y = 474
+		enemigo.vidas = 100
+		enemigo.x = 1150
+		enemigo.y = 400
+		plataforma.vidas = 100
+		plataforma.x = 130
+		plataforma.y = 450
+		cut_scene_manager.cut_scenes_complete = []
+		z = 6
 
 	animacion_hikaru += 1
 	#print(plataforma.x)
 	#print(plataforma.y)
 
-	if cut_scene_manager.cut_scene is None:
-		
-		plataforma.Movimiento()
-		plataforma.Ataque()
-
 	#FONDO
 	screen.blit(fondo, [0, 0])
-	#draw.rect(screen, (0, 0, 0, 255), (0, 600, 1280, 300))
 	barra_hp(screen, 50, 40, enemigo.vidas, (255,0,0))
 	barra_hp(screen, 1060, 40, plataforma.vidas, (0,0,255))
 	screen.blit(vida_hikaru, [1000, -100])
 	screen.blit(vida_boss, [-25, -100])
-	plataforma.DibujarObjeto()
+	#plataforma.DibujarObjeto()
 	enemigo.DibujarObjeto()
+	
+	if cut_scene_manager.cut_scene is None and retry == False:
+		plataforma.Movimiento()
+		plataforma.Ataque()
 	
 	if level == 1:
 		suelo1.DibujarObjeto()
 		#COMPROBACION SUELO
-		if suelo1.check_suelo(plataforma) or suelo2.check_suelo(plataforma):
+		if suelo1.check_suelo(plataforma):
 			suelo = True
 		else:
 			suelo = False	
 		#ANIMACION GORDO
-		if enemigo.vidas <= save_vida:
-			if enemigo.x <= 80:
-				enemigo.direccionx = 1
-			elif enemigo.x >= 1200:
-				enemigo.direccionx = 0
-			save_vida = enemigo.vidas - 10
-			terremoto = True
-		enemigo.Movimiento_Gordo()
-		if enemigo.vidas <= 100:
-			enemigo.Terremoto_Espada1()
-			screen.blit(espada_gordo, [enemigo.espada1.x-40, enemigo.espada1.y])
-			screen.blit(slash, [enemigo.disparo3.x-50, enemigo.disparo3.y])
-			screen.blit(slash_, [enemigo.disparo4.x-20, enemigo.disparo4.y])
+		if retry == False:
+			if enemigo.vidas <= save_vida:
+				if enemigo.x <= 130:
+					enemigo.direccionx = 1
+				elif enemigo.x >= 1150:
+					enemigo.direccionx = 0
+				save_vida = enemigo.vidas - 10
+				terremoto = True
+			enemigo.Movimiento_Gordo()	
 			if enemigo.vidas <= 100:
-				enemigo.Terremoto_Espada2()
-				screen.blit(espada_gordo, [enemigo.espada2.x-40, enemigo.espada2.y])
-				screen.blit(slash, [enemigo.disparo5.x-50, enemigo.disparo5.y])
-				screen.blit(slash_, [enemigo.disparo6.x-20, enemigo.disparo6.y])
-		if enemigo.direccionx == 2:
-			if terremoto == True and suelo == False:
-				enemigo.disparo1.x = enemigo.x + 30
-				enemigo.disparo2.x = enemigo.x
-				terremoto = False
-			enemigo.Terremoto_Gordo()
-			screen.blit(slash, [enemigo.disparo1.x-50, enemigo.disparo1.y])
-			screen.blit(slash_, [enemigo.disparo2.x-20, enemigo.disparo2.y])
+				enemigo.Terremoto_Espada1()
+				screen.blit(espada_gordo, [enemigo.espada1.x-40, enemigo.espada1.y])
+				screen.blit(slash, [enemigo.disparo3.x-50, enemigo.disparo3.y])
+				screen.blit(slash_, [enemigo.disparo4.x-20, enemigo.disparo4.y])
+				if enemigo.vidas <= 100:
+					enemigo.Terremoto_Espada2()
+					screen.blit(espada_gordo, [enemigo.espada2.x-40, enemigo.espada2.y])
+					screen.blit(slash, [enemigo.disparo5.x-50, enemigo.disparo5.y])
+					screen.blit(slash_, [enemigo.disparo6.x-20, enemigo.disparo6.y])
+			if enemigo.direccionx == 2:
+				if terremoto == True: #and suelo == False:
+					enemigo.disparo1.x = enemigo.x + 30
+					enemigo.disparo2.x = enemigo.x
+					terremoto = False
+				enemigo.Terremoto_Gordo()
+				screen.blit(slash, [enemigo.disparo1.x-50, enemigo.disparo1.y])
+				screen.blit(slash_, [enemigo.disparo2.x-20, enemigo.disparo2.y])
 		if enemigo.disparo1.x != 1380 and enemigo.disparo2.x != -100:
 			screen.blit(gordo_attack, [enemigo.x-40, enemigo.y-32.5])
 		elif enemigo.direccionx != 2:
@@ -702,34 +986,155 @@ while True:
 			level = 2
 
 	if level == 2:
+		if plataforma.y > 720:
+			plataforma.vidas = 0
 		#COMPROBACION SUELO
 		if suelo1.check_suelo(plataforma) or suelo2.check_suelo(plataforma) or suelo3.check_suelo(plataforma) or suelo4.check_suelo(plataforma) or suelo5.check_suelo(plataforma) or suelo6.check_suelo(plataforma) or suelo7.check_suelo(plataforma) or suelo8.check_suelo(plataforma) or suelo9.check_suelo(plataforma) or suelo10.check_suelo(plataforma) or suelo11.check_suelo(plataforma) or suelo12.check_suelo(plataforma) or suelo13.check_suelo(plataforma) or suelo14.check_suelo(plataforma):
 			suelo = True
 		else:
 			suelo = False
+		if enemigo.vidas <= save_vida:
+			save_vida = enemigo.vidas - 10
+			ataque_plataforma = 3
+			cont_plataforma = 0
 		enemigo.Ataque_Plataforma()
 		if cont_plataforma < 600:
 			cont_plataforma += 1
-		suelo2.DibujarObjeto()
-		suelo3.DibujarObjeto()
-		suelo4.DibujarObjeto()
-		suelo5.DibujarObjeto()
-		suelo6.DibujarObjeto()
-		suelo7.DibujarObjeto()
-		suelo8.DibujarObjeto()
-		suelo9.DibujarObjeto()
-		suelo10.DibujarObjeto()
-		suelo11.DibujarObjeto()
-		suelo12.DibujarObjeto()
-		suelo13.DibujarObjeto()
-		suelo14.DibujarObjeto()
+		else:
+			cont_plataforma = 0
+			if enemigo.vidas <= 75:
+				ataque_plataforma = 1
+			if enemigo.vidas <= 50:
+				ataque_plataforma = 2
+		screen.blit(columna, [30, 200])
+		screen.blit(columna, [30, 400])
+		screen.blit(columna, [30, 600])
+		screen.blit(columna, [575, 200])
+		screen.blit(columna, [575, 400])
+		screen.blit(columna, [575, 600])
+		screen.blit(columna, [1130, 200])
+		screen.blit(columna, [1130, 400])
+		screen.blit(columna, [1130, 600])
+		screen.blit(columna, [300, 300])
+		screen.blit(columna, [300, 500])
+		screen.blit(columna, [850, 300])
+		screen.blit(columna, [850, 500])
+		#ANIMACION NINJA
+		if enemigo.vidas <= 75 and animacion_ninja == 3:
+			ninja1 = transform.scale(image.load("shoshin-kantetsu_images/ninja1_2.png"), (75, 150))
+			ninja2 = transform.scale(image.load("shoshin-kantetsu_images/ninja2_2.png"), (75, 150))
+			animacion_ninja = 2
+		elif enemigo.vidas <= 50 and animacion_ninja == 2:
+			ninja1 = transform.scale(image.load("shoshin-kantetsu_images/ninja1_3.png"), (75, 150))
+			ninja2 = transform.scale(image.load("shoshin-kantetsu_images/ninja2_3.png"), (75, 150))
+			animacion_ninja = 1
 		if enemigo.x <= 640:
 			screen.blit(ninja1, [enemigo.x-20, enemigo.y-25])
 		else:
 			screen.blit(ninja2, [enemigo.x-25, enemigo.y-25])
 		if enemigo.vidas <= 0:
 			level = 3
+	
+	if level == 3:
+		#COMPROBACION SUELO
+		if suelo1.check_suelo(plataforma) or suelo7.check_suelo(plataforma) or suelo8.check_suelo(plataforma) or suelo9.check_suelo(plataforma) or suelo10.check_suelo(plataforma) or suelo11.check_suelo(plataforma) or suelo12.check_suelo(plataforma):
+			suelo = True
+		else:
+			suelo = False
+		screen.blit(columna_vieja, [30, 147])
+		screen.blit(columna_vieja, [575, 147])
+		screen.blit(columna_vieja, [575, 447])
+		screen.blit(columna_vieja, [1130, 147])
+		screen.blit(columna_vieja, [300, 297])
+		screen.blit(columna_vieja, [850, 297])
+		screen.blit(estatua, [582.5, 325])
+		screen.blit(estatua_rojo, [37.5, 35])
+		screen.blit(estatua_blanco, [307.5, 185])
+		screen.blit(estatua_dorado, [582.5, 35])
+		screen.blit(estatua_negro, [857.5, 185])
+		screen.blit(estatua_azul, [1137.5, 35])
+		suelo1.DibujarObjeto()
 
+		enemigo.Colores()
+
+		if plataforma.vidas <= 0:
+			screen.fill((0, 0, 0))
+			cut_scene_manager.start_cut_scene(CutSceneRetry(plataforma))
+			retry = True
+
+		if (ataque == 1 or ataque == 2) and plataforma.direcciony == 0 and color_y >= 50:
+			#if suelo7.check_suelo(plataforma): #ESTATUA
+				#choice = 7
+			if suelo8.check_suelo(plataforma): #ROJO
+				choice = 8
+			if suelo9.check_suelo(plataforma): #AZUL
+				choice = 9
+			if suelo10.check_suelo(plataforma): #BLANCO
+				choice = 10
+			if suelo11.check_suelo(plataforma): #NEGRO
+				choice = 11
+			if suelo12.check_suelo(plataforma): #DORADO
+				choice = 12
+		
+		if enemigo.vidas <= 0:
+			level = 4
+	
+	if level == 4:
+		screen.blit(orbe, [enemigo.disparo1.x-15, enemigo.disparo1.y-15])
+		screen.blit(orbe, [enemigo.disparo2.x-15, enemigo.disparo2.y-15])
+		screen.blit(orbe, [enemigo.disparo3.x-15, enemigo.disparo3.y-15])
+		screen.blit(orbe, [enemigo.disparo4.x-15, enemigo.disparo4.y-15])
+		screen.blit(orbe, [enemigo.disparo5.x-15, enemigo.disparo5.y-15])
+		screen.blit(orbe, [enemigo.disparo6.x-15, enemigo.disparo6.y-15])
+		suelo2.DibujarObjeto()
+		suelo3.DibujarObjeto()
+		suelo4.DibujarObjeto()
+		suelo5.DibujarObjeto()
+		suelo6.DibujarObjeto()
+
+		if suelo2.check_suelo(plataforma) or suelo3.check_suelo(plataforma) or suelo4.check_suelo(plataforma) or suelo5.check_suelo(plataforma) or suelo6.check_suelo(plataforma):
+			suelo = True
+		else:
+			suelo = False
+
+		if plataforma.vidas <= 0:
+			screen.fill((0, 0, 0))
+			cut_scene_manager.start_cut_scene(CutSceneRetry(plataforma))
+			retry = True
+
+		if enemigo.vidas <= 80 and cont_mago == 200:
+			if enemigo.disparo3.x == 5000:
+				enemigo.disparo3.x = 3000
+				enemigo.disparo4.x = 3000
+			if enemigo.vidas <= 40:
+				if enemigo.disparo5.x == 5000:
+					enemigo.disparo5.x = 3000
+					enemigo.disparo6.x = 3000
+		if cont_mago == 0:
+			save_vida = enemigo.vidas - 10
+		if enemigo.vidas <= save_vida:
+			cont_mago = 10000
+
+		cont_mago += 1
+		enemigo.Ataque_Orbe(enemigo)
+		enemigo.Ataque_Mago(plataforma, suelo2, suelo3, suelo4, suelo5, suelo6)
+		
+		#ANIMACION MAGO
+		if enemigo.x <= 640:
+			screen.blit(mago1, [enemigo.x-40, enemigo.y-50])
+		else:
+			screen.blit(mago2, [enemigo.x-30, enemigo.y-50])
+		
+		if enemigo.vidas <= 0:
+			level = 5
+	
+	if level == 5:
+		suelo1.DibujarObjeto()
+		if suelo1.check_suelo(plataforma):
+			suelo = True
+		else:
+			suelo = False
+			
 	#ANIMACIÓN HIKARU
 	if suelo == False and ataque == 0:
 		if plataforma.direccionx == 0:
@@ -810,7 +1215,10 @@ while True:
 			if evento.key == K_RIGHT:
 				level += 1
 			if evento.key == K_LEFT:
-				ataque_plataforma = 3
+				level = 3
+			if evento.key == K_z and retry == True:
+				z -= 1
+				retry = False
 			if evento.key == K_ESCAPE:
 				quit()
 				exit()
