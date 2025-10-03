@@ -716,13 +716,15 @@ dorado = transform.scale(image.load("shoshin-kantetsu_images/dorado.png"), (50, 
 mago1 = transform.scale(image.load("shoshin-kantetsu_images/mago1.png"), (100, 100))
 mago2 = transform.scale(image.load("shoshin-kantetsu_images/mago2.png"), (100, 100))
 orbe = transform.scale(image.load("shoshin-kantetsu_images/orbe.png"), (50, 50))
+padre1 = transform.scale(image.load("shoshin-kantetsu_images/padre1.png"), (150, 150))
+padre2 = transform.scale(image.load("shoshin-kantetsu_images/padre2.png"), (150, 150))
 animacion_hikaru = 0
 animacion_gordo = 0
 animacion_ninja = 3
 save_vida = 90
 level = 0
 retry = False
-fondo = fondo2
+fondo = fondo1
 cut_scene_manager = CutSceneManager(screen)
 
 while True:
@@ -755,13 +757,17 @@ while True:
 		color_y = 0
 		ataque_mago = 1
 		cont_mago = 0
-		#cut_scene_manager.start_cut_scene(CutSceneZero(plataforma))
+		cut_scene_manager.start_cut_scene(CutSceneZero(plataforma))
 		if cut_scene_manager.cut_scene is None:
 			z = 0
 	if level == 0 and z == 0: #TUTORIAL
-		level = 1
-		z = 1
+		fondo = fondo1
+		cut_scene_manager.start_cut_scene(CutSceneTutorial(plataforma))
+		if cut_scene_manager.cut_scene is None:
+			level = 1
+			z = 1
 	if level == 1 and z == 1:
+		fondo = fondo2
 		plataforma.vidas = 100
 		plataforma.x = 130
 		plataforma.y = 576
@@ -779,8 +785,9 @@ while True:
 		enemigo.disparo4.x = -100
 		enemigo.disparo5.x = 1380
 		enemigo.disparo6.x = -100
-		cut_scene_manager.cut_scenes_complete = []
-		z = 2
+		cut_scene_manager.start_cut_scene(CutSceneOneStart(plataforma))
+		if cut_scene_manager.cut_scene is None:
+			z = 2
 	if level == 2 and z == 2:
 		fondo = fondo3
 		enemigo.vidas = 100
@@ -808,7 +815,7 @@ while True:
 		enemigo.x = 900
 		enemigo.y = 175
 		ninja = 3
-		cut_scene_manager.cut_scenes_complete = []
+		#cut_scene_manager.cut_scenes_complete = []
 		z = 3
 	if level == 3 and z == 3:
 		fondo = fondo4
@@ -922,10 +929,18 @@ while True:
 	#plataforma.DibujarObjeto()
 	enemigo.DibujarObjeto()
 	
-	if cut_scene_manager.cut_scene is None and retry == False:
+	if (cut_scene_manager.cut_scene is None and retry == False) or (level == 0 and z == 0):
 		plataforma.Movimiento()
 		plataforma.Ataque()
 	
+	if level == 0:
+		suelo1.DibujarObjeto()
+		#COMPROBACION SUELO
+		if suelo1.check_suelo(plataforma):
+			suelo = True
+		else:
+			suelo = False
+
 	if level == 1:
 		suelo1.DibujarObjeto()
 		#COMPROBACION SUELO
@@ -934,7 +949,7 @@ while True:
 		else:
 			suelo = False	
 		#ANIMACION GORDO
-		if retry == False:
+		if retry == False and cut_scene_manager.cut_scene is None:
 			if enemigo.vidas <= save_vida:
 				if enemigo.x <= 130:
 					enemigo.direccionx = 1
@@ -982,8 +997,16 @@ while True:
 				screen.blit(gordo1, [enemigo.x-40, enemigo.y-32.5])
 			else:
 				screen.blit(gordo2, [enemigo.x-40, enemigo.y-32.5])
+		
+		if plataforma.vidas <= 0:
+			screen.fill((0, 0, 0))
+			cut_scene_manager.start_cut_scene(CutSceneRetry(plataforma))
+			retry = True
+
 		if enemigo.vidas <= 0:
-			level = 2
+			cut_scene_manager.start_cut_scene(CutSceneOneFinal(plataforma))
+			if cut_scene_manager.cut_scene is None:
+				level = 2
 
 	if level == 2:
 		if plataforma.y > 720:
@@ -1032,6 +1055,12 @@ while True:
 			screen.blit(ninja1, [enemigo.x-20, enemigo.y-25])
 		else:
 			screen.blit(ninja2, [enemigo.x-25, enemigo.y-25])
+		
+		if plataforma.vidas <= 0:
+			screen.fill((0, 0, 0))
+			cut_scene_manager.start_cut_scene(CutSceneRetry(plataforma))
+			retry = True
+		
 		if enemigo.vidas <= 0:
 			level = 3
 	
@@ -1134,6 +1163,12 @@ while True:
 			suelo = True
 		else:
 			suelo = False
+		
+		#ANIMACION PADRE
+		if enemigo.x <= 640:
+			screen.blit(padre1, [enemigo.x-40, enemigo.y-32.5])
+		else:
+			screen.blit(padre2, [enemigo.x-60, enemigo.y-55])
 			
 	#ANIMACIÓN HIKARU
 	if suelo == False and ataque == 0:
@@ -1203,6 +1238,9 @@ while True:
 			if plataforma.direccionx == 1:
 				screen.blit(hikaru_attack2, [plataforma.x-32.5, plataforma.y-32.5])
 
+	if z == -1:
+		screen.fill((0, 0, 0))
+
 	cut_scene_manager.update()
 	cut_scene_manager.draw()
 	display.flip()
@@ -1215,8 +1253,9 @@ while True:
 			if evento.key == K_RIGHT:
 				level += 1
 			if evento.key == K_LEFT:
-				level = 3
+				enemigo.vidas = 0
 			if evento.key == K_z and retry == True:
+				cut_scene_manager.cut_scenes_complete = []
 				z -= 1
 				retry = False
 			if evento.key == K_ESCAPE:
