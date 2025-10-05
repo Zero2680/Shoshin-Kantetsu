@@ -757,12 +757,12 @@ while True:
 		color_y = 0
 		ataque_mago = 1
 		cont_mago = 0
-		cut_scene_manager.start_cut_scene(CutSceneZero(plataforma))
+		#cut_scene_manager.start_cut_scene(CutSceneZero(plataforma))
 		if cut_scene_manager.cut_scene is None:
 			z = 0
 	if level == 0 and z == 0: #TUTORIAL
 		fondo = fondo1
-		cut_scene_manager.start_cut_scene(CutSceneTutorial(plataforma))
+		#cut_scene_manager.start_cut_scene(CutSceneTutorial(plataforma))
 		if cut_scene_manager.cut_scene is None:
 			level = 1
 			z = 1
@@ -785,7 +785,7 @@ while True:
 		enemigo.disparo4.x = -100
 		enemigo.disparo5.x = 1380
 		enemigo.disparo6.x = -100
-		cut_scene_manager.start_cut_scene(CutSceneOneStart(plataforma))
+		#cut_scene_manager.start_cut_scene(CutSceneOneStart(plataforma))
 		if cut_scene_manager.cut_scene is None:
 			z = 2
 	if level == 2 and z == 2:
@@ -815,8 +815,9 @@ while True:
 		enemigo.x = 900
 		enemigo.y = 175
 		ninja = 3
-		#cut_scene_manager.cut_scenes_complete = []
-		z = 3
+		cut_scene_manager.start_cut_scene(CutSceneSecondStart(plataforma))
+		if cut_scene_manager.cut_scene is None:
+			z = 3
 	if level == 3 and z == 3:
 		fondo = fondo4
 		suelo1.y = 599
@@ -838,8 +839,9 @@ while True:
 		plataforma.vidas = 100
 		plataforma.x = 130
 		plataforma.y = 575
-		cut_scene_manager.cut_scenes_complete = []
-		z = 4
+		cut_scene_manager.start_cut_scene(CutSceneThreeStart(plataforma))
+		if cut_scene_manager.cut_scene is None:
+			z = 4
 	if level == 4 and z == 4:
 		fondo = fondo5
 		suelo1.y = 3000
@@ -902,8 +904,9 @@ while True:
 		aleatorio3 = -1
 		cont_mago = 0
 		ataque_mago = 1
-		cut_scene_manager.cut_scenes_complete = []
-		z = 5
+		cut_scene_manager.start_cut_scene(CutSceneFourStart(plataforma))
+		if cut_scene_manager.cut_scene is None:
+			z = 5
 	if level == 5 and z == 5:
 		fondo = fondo6
 		suelo1.y = 474
@@ -1062,7 +1065,9 @@ while True:
 			retry = True
 		
 		if enemigo.vidas <= 0:
-			level = 3
+			cut_scene_manager.start_cut_scene(CutSceneSecondFinal(plataforma))
+			if cut_scene_manager.cut_scene is None:
+				level = 3
 	
 	if level == 3:
 		#COMPROBACION SUELO
@@ -1106,7 +1111,9 @@ while True:
 				choice = 12
 		
 		if enemigo.vidas <= 0:
-			level = 4
+			cut_scene_manager.start_cut_scene(CutSceneThreeFinal(plataforma))
+			if cut_scene_manager.cut_scene is None:
+				level = 4
 	
 	if level == 4:
 		screen.blit(orbe, [enemigo.disparo1.x-15, enemigo.disparo1.y-15])
@@ -1155,7 +1162,9 @@ while True:
 			screen.blit(mago2, [enemigo.x-30, enemigo.y-50])
 		
 		if enemigo.vidas <= 0:
-			level = 5
+			cut_scene_manager.start_cut_scene(CutSceneFourFinal(plataforma))
+			if cut_scene_manager.cut_scene is None:
+				level = 5
 	
 	if level == 5:
 		suelo1.DibujarObjeto()
