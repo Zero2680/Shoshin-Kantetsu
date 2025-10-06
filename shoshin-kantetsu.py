@@ -910,11 +910,15 @@ while True:
 	if level == 5 and z == 5:
 		fondo = fondo6
 		suelo1.y = 474
+		suelo1.x = 350
+		suelo1.ancho = 583
 		enemigo.vidas = 100
-		enemigo.x = 1150
+		#enemigo.x = 1150
+		enemigo.x = 800
 		enemigo.y = 400
 		plataforma.vidas = 100
-		plataforma.x = 130
+		#plataforma.x = 130
+		plataforma.x = 400
 		plataforma.y = 450
 		cut_scene_manager.cut_scenes_complete = []
 		z = 6
@@ -1263,6 +1267,9 @@ while True:
 				level += 1
 			if evento.key == K_LEFT:
 				enemigo.vidas = 0
+			if evento.key == K_UP:
+				z = 5
+				level = 5
 			if evento.key == K_z and retry == True:
 				cut_scene_manager.cut_scenes_complete = []
 				z -= 1
