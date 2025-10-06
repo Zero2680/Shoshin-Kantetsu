@@ -236,6 +236,14 @@ class Boss(Objeto):
 				suelo5.golpear(plataforma, self, self.disparo1, self.disparo2, self.disparo3, self.disparo4, self.disparo5, self.disparo6)
 			if aleatorio1 == 6 or aleatorio2 == 6 or aleatorio3 == 6:
 				suelo6.golpear(plataforma, self, self.disparo1, self.disparo2, self.disparo3, self.disparo4, self.disparo5, self.disparo6)
+	
+	def Ataque_Espaditas(self):
+		self.disparo1.Movimiento_Espadita()
+		self.disparo2.Movimiento_Espadita()
+		#self.disparo3.Movimiento_Espadita()
+		#self.disparo4.Movimiento_Espadita()
+		self.disparo5.Movimiento_Espadita()
+		self.disparo6.Movimiento_Espadita()
 
 	def Ataque_Plataforma(self):
 		global ataque_plataforma, aleatorio1, aleatorio2, aleatorio3, cont_plataforma
@@ -589,6 +597,36 @@ class Disparo(Objeto):
 				plataforma.vidas -= 10
 				self.x = enemigo.x
 				self.y = enemigo.y
+	
+	def Movimiento_Espadita(self):
+		if Personaje.check_colisiones(self, plataforma) == True:
+			plataforma.vidas -= 1
+			self.x = 1280
+			self.y = 210
+		if self.direccionx == 0:
+			if self.direcciony == 0:
+				screen.blit(espadita2_1, [self.x-15, self.y-15])
+			else:
+				screen.blit(espadita2_2, [self.x-15, self.y-15])
+			self.x -= 1
+		if self.direccionx == 1:
+			if self.direcciony == 0:
+				screen.blit(espadita1_1, [self.x-15, self.y-15])
+			else:
+				screen.blit(espadita1_2, [self.x-15, self.y-15])
+			self.x += 1
+		if self.direcciony == 0:
+			self.y -= 2.5
+		if self.direcciony == 1:
+			self.y += 2.5
+		if self.x <= 0 and self.direccionx == 0:
+			self.x = 1260
+		if self.x >= 1280 and self.direccionx == 1:
+			self.x = 0
+		if self.y <= 0:
+			self.direcciony = 1
+		if self.y >= 700:
+			self.direcciony = 0
 
 class Suelo(Objeto):
 	def __init__(self, x, y, ancho, largo, color , vidas, direccionx, direcciony):
@@ -718,6 +756,10 @@ mago2 = transform.scale(image.load("shoshin-kantetsu_images/mago2.png"), (100, 1
 orbe = transform.scale(image.load("shoshin-kantetsu_images/orbe.png"), (50, 50))
 padre1 = transform.scale(image.load("shoshin-kantetsu_images/padre1.png"), (150, 150))
 padre2 = transform.scale(image.load("shoshin-kantetsu_images/padre2.png"), (150, 150))
+espadita1_1 = transform.scale(image.load("shoshin-kantetsu_images/espada1_1.png"), (50, 50))
+espadita1_2 = transform.scale(image.load("shoshin-kantetsu_images/espada1_2.png"), (50, 50))
+espadita2_1 = transform.scale(image.load("shoshin-kantetsu_images/espada2_1.png"), (50, 50))
+espadita2_2 = transform.scale(image.load("shoshin-kantetsu_images/espada2_2.png"), (50, 50))
 animacion_hikaru = 0
 animacion_gordo = 0
 animacion_ninja = 3
@@ -920,6 +962,36 @@ while True:
 		#plataforma.x = 130
 		plataforma.x = 400
 		plataforma.y = 450
+		enemigo.disparo1.largo = 20
+		enemigo.disparo1.ancho = 20
+		enemigo.disparo2.largo = 20
+		enemigo.disparo2.ancho = 20
+		enemigo.disparo3.largo = 20
+		enemigo.disparo3.ancho = 20
+		enemigo.disparo4.largo = 20
+		enemigo.disparo4.ancho = 20
+		enemigo.disparo5.largo = 20
+		enemigo.disparo5.ancho = 20
+		enemigo.disparo6.largo = 20
+		enemigo.disparo6.ancho = 20
+		enemigo.disparo1.x = 0
+		enemigo.disparo1.direccionx = 1
+		enemigo.disparo1.direcciony = 1
+		enemigo.disparo2.x = -300
+		enemigo.disparo2.direccionx = 1
+		enemigo.disparo2.direcciony = 0
+		enemigo.disparo3.x = -600
+		enemigo.disparo3.direccionx = 1
+		enemigo.disparo3.direcciony = 1
+		enemigo.disparo4.x = 1280
+		enemigo.disparo4.direccionx = 0
+		enemigo.disparo4.direcciony = 0
+		enemigo.disparo5.x = 1580
+		enemigo.disparo5.direccionx = 0
+		enemigo.disparo5.direcciony = 1
+		enemigo.disparo6.x = 1880
+		enemigo.disparo6.direccionx = 0
+		enemigo.disparo6.direcciony = 0
 		cut_scene_manager.cut_scenes_complete = []
 		z = 6
 
@@ -1171,11 +1243,20 @@ while True:
 				level = 5
 	
 	if level == 5:
+		'''screen.blit(espadita1_1, [enemigo.disparo1.x-15, enemigo.disparo1.y-15])
+		screen.blit(espadita1_1, [enemigo.disparo2.x-15, enemigo.disparo2.y-15])
+		screen.blit(espadita1_1, [enemigo.disparo3.x-15, enemigo.disparo3.y-15])
+		screen.blit(espadita2_1, [enemigo.disparo4.x-15, enemigo.disparo4.y-15])
+		screen.blit(espadita2_1, [enemigo.disparo5.x-15, enemigo.disparo5.y-15])
+		screen.blit(espadita2_1, [enemigo.disparo6.x-15, enemigo.disparo6.y-15])'''
+
 		suelo1.DibujarObjeto()
 		if suelo1.check_suelo(plataforma):
 			suelo = True
 		else:
 			suelo = False
+		
+		enemigo.Ataque_Espaditas()
 		
 		#ANIMACION PADRE
 		if enemigo.x <= 640:
