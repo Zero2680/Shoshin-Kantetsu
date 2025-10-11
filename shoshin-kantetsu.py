@@ -226,6 +226,7 @@ class Boss(Objeto):
 			self.x = 3000
 			ataque_mago = 0
 		if aleatorio1 != -1:
+			self.x = 3000
 			if aleatorio1 == 2 or aleatorio2 == 2 or aleatorio3 == 2:
 				suelo2.golpear(plataforma, self, self.disparo1, self.disparo2, self.disparo3, self.disparo4, self.disparo5, self.disparo6)
 			if aleatorio1 == 3 or aleatorio2 == 3 or aleatorio3 == 3:
@@ -495,9 +496,9 @@ class Boss(Objeto):
 						aleatorio3 = -1
 		
 	def Colores(self):
-		global color, choice, racha, color_x, color_y
+		global color, choice, racha, color_x, color_y, oscuridad
 		color_y += 0.25
-		if self.vidas < 75:
+		if self.vidas < 75 or oscuridad == 1:
 			color_y += 0.25
 			if self.vidas < 50:
 				color_y += 0.25
@@ -575,10 +576,13 @@ class Disparo(Objeto):
 			self.vidas = 0
 	
 	def Movimiento_Orbe(self, enemigo):
+		global oscuridad
+		if self.x == 2000 and enemigo.x == 3000:
+			self.x = 3000
 		if self.x == 3000 and enemigo.x != 3000:
-			self.x = enemigo.x
-			self.y = enemigo.y
-		if self.x < 3000:
+			self.x = 640
+			self.y = 100
+		if self.x < 2000:
 			if self.direccionx == 0:
 				self.x -= 2
 			if self.direccionx == 1:
@@ -597,8 +601,12 @@ class Disparo(Objeto):
 				self.direcciony = 0
 			if Personaje.check_colisiones(self, plataforma) == True:
 				plataforma.vidas -= 10
-				self.x = enemigo.x
-				self.y = enemigo.y
+				if oscuridad == 0:
+					self.x = 2000
+					self.y = 2000
+				else:
+					self.x = 15
+					self.y = 15
 	
 	def Movimiento_Espadita(self):
 		if Personaje.check_colisiones(self, plataforma) == True:
@@ -641,7 +649,10 @@ class Suelo(Objeto):
 	def golpear(self, plataforma, enemigo, orbe1, orbe2, orbe3, orbe4, orbe5, orbe6):
 		global cont_mago, aleatorio1, aleatorio2, aleatorio3, ataque_mago
 		self.largo = 1000
-		self.color = (0,255,0)
+		if self.y != 599 or self.y != 3000:
+			self.color = (0,255,0)
+		else:
+			self.color = (0, 0, 0)
 		if 0 < cont_mago <= 200:
 			self.y -= 0.25
 		elif 50 < cont_mago <= 400:
@@ -714,6 +725,7 @@ fondo3 = transform.scale(image.load("shoshin-kantetsu_images/fondo3.jpg").conver
 fondo4 = transform.scale(image.load("shoshin-kantetsu_images/fondo4.jpg").convert(), (1280, 720))
 fondo5 = transform.scale(image.load("shoshin-kantetsu_images/fondo5.jpg").convert(), (1280, 720))
 fondo6 = transform.scale(image.load("shoshin-kantetsu_images/fondo6.jpg").convert(), (1280, 720))
+fondo7 = transform.scale(image.load("shoshin-kantetsu_images/fondo7.jpg").convert(), (1280, 720))
 hikaru1 = transform.scale(image.load("shoshin-kantetsu_images/hikaru1.png"), (50, 50))
 hikaru1_ = transform.scale(image.load("shoshin-kantetsu_images/hikaru1_.png"), (50, 50))
 hikaru2 = transform.scale(image.load("shoshin-kantetsu_images/hikaru2.png"), (50, 50))
@@ -766,12 +778,15 @@ dorado = transform.scale(image.load("shoshin-kantetsu_images/dorado.png"), (50, 
 mago1 = transform.scale(image.load("shoshin-kantetsu_images/mago1.png"), (100, 100))
 mago2 = transform.scale(image.load("shoshin-kantetsu_images/mago2.png"), (100, 100))
 orbe = transform.scale(image.load("shoshin-kantetsu_images/orbe.png"), (50, 50))
+orbe_o = transform.scale(image.load("shoshin-kantetsu_images/orbe_o.png"), (50, 50))
 padre1 = transform.scale(image.load("shoshin-kantetsu_images/padre1.png"), (150, 150))
 padre2 = transform.scale(image.load("shoshin-kantetsu_images/padre2.png"), (150, 150))
 espadita1_1 = transform.scale(image.load("shoshin-kantetsu_images/espada1_1.png"), (50, 50))
 espadita1_2 = transform.scale(image.load("shoshin-kantetsu_images/espada1_2.png"), (50, 50))
 espadita2_1 = transform.scale(image.load("shoshin-kantetsu_images/espada2_1.png"), (50, 50))
 espadita2_2 = transform.scale(image.load("shoshin-kantetsu_images/espada2_2.png"), (50, 50))
+oscuridad1 = transform.scale(image.load("shoshin-kantetsu_images/oscuridad1.png"), (150, 150))
+oscuridad2 = transform.scale(image.load("shoshin-kantetsu_images/oscuridad2.png"), (150, 150))
 animacion_hikaru = 0
 animacion_gordo = 0
 animacion_ninja = 3
@@ -782,7 +797,7 @@ fondo = fondo1
 cut_scene_manager = CutSceneManager(screen)
 
 while True:
-	global salto, angulo, x_jump, salto_doble, w, quieto, correr, ataque, ataque_espada, time_ataque, terremoto, hit, suelo, x_sup, jump, ataque_plataforma, aleatorio1, aleatorio2, aleatorio3, cont_plataforma, color, choice, racha, ataque_mago, cont_mago
+	global salto, angulo, x_jump, salto_doble, w, quieto, correr, ataque, ataque_espada, time_ataque, terremoto, hit, suelo, x_sup, jump, ataque_plataforma, aleatorio1, aleatorio2, aleatorio3, cont_plataforma, color, choice, racha, ataque_mago, cont_mago, oscuridad
 	if z == -1:
 		salto = False
 		angulo = 0.0
@@ -811,6 +826,7 @@ while True:
 		color_y = 0
 		ataque_mago = -1
 		cont_mago = 0
+		oscuridad = 0
 		#cut_scene_manager.start_cut_scene(CutSceneZero(plataforma))
 		if cut_scene_manager.cut_scene is None:
 			z = 0
@@ -839,7 +855,7 @@ while True:
 		enemigo.disparo4.x = -100
 		enemigo.disparo5.x = 1380
 		enemigo.disparo6.x = -100
-		#cut_scene_manager.start_cut_scene(CutSceneOneStart(plataforma))
+		cut_scene_manager.start_cut_scene(CutSceneOneStart(plataforma))
 		if cut_scene_manager.cut_scene is None:
 			z = 2
 	if level == 2 and z == 2:
@@ -935,6 +951,14 @@ while True:
 		enemigo.disparo1.ancho = 20
 		enemigo.disparo2.largo = 20
 		enemigo.disparo2.ancho = 20
+		enemigo.disparo3.largo = 20
+		enemigo.disparo3.ancho = 20
+		enemigo.disparo4.largo = 20
+		enemigo.disparo4.ancho = 20
+		enemigo.disparo5.largo = 20
+		enemigo.disparo5.ancho = 20
+		enemigo.disparo6.largo = 20
+		enemigo.disparo6.ancho = 20
 		enemigo.disparo1.x = enemigo.x
 		enemigo.disparo1.direccionx = 0
 		enemigo.disparo1.direcciony = 1
@@ -953,11 +977,16 @@ while True:
 		enemigo.disparo6.x = 5000
 		enemigo.disparo6.direccionx = 1
 		enemigo.disparo6.direcciony = 0
-		aleatorio1 = 4
+		aleatorio1 = -1
 		aleatorio2 = -1
 		aleatorio3 = -1
 		cont_mago = 0
-		ataque_mago = 1
+		ataque_mago = -1
+		suelo2.color = (0,0,0)
+		suelo3.color = (0,0,0)
+		suelo4.color = (0,0,0)
+		suelo5.color = (0,0,0)
+		suelo6.color = (0,0,0)
 		cut_scene_manager.start_cut_scene(CutSceneFourStart(plataforma))
 		if cut_scene_manager.cut_scene is None:
 			z = 5
@@ -1000,8 +1029,54 @@ while True:
 		enemigo.disparo6.x = 1880
 		enemigo.disparo6.direccionx = 0
 		enemigo.disparo6.direcciony = 0
-		cut_scene_manager.cut_scenes_complete = []
-		z = 6
+		cut_scene_manager.start_cut_scene(CutSceneFiveStart(plataforma))
+		if cut_scene_manager.cut_scene is None:
+			z = 6
+	if level == 6 and z == 6:
+		oscuridad = 1
+
+		fondo = fondo7
+		suelo1.y = 599
+		suelo2.y = 3000
+		suelo3.y = 3000
+		suelo4.y = 3000
+		suelo5.y = 3000
+		suelo6.y = 3000
+		suelo7.y = 449
+		suelo8.y = 149
+		suelo9.y = 149
+		suelo10.y = 299
+		suelo11.y = 299
+		suelo12.y = 149
+		suelo13.y = 3000
+		suelo14.y = 3000
+		enemigo.vidas = 100
+		enemigo.x = 3000
+
+		enemigo.disparo1.largo = 20
+		enemigo.disparo1.ancho = 20
+		enemigo.disparo2.largo = 20
+		enemigo.disparo2.ancho = 20
+		enemigo.disparo3.largo = 20
+		enemigo.disparo3.ancho = 20
+		enemigo.disparo4.largo = 20
+		enemigo.disparo4.ancho = 20
+		enemigo.disparo1.x = 320
+		enemigo.disparo1.direccionx = 0
+		enemigo.disparo1.direcciony = 1
+		enemigo.disparo2.x = 640
+		enemigo.disparo2.direccionx = 1
+		enemigo.disparo2.direcciony = 0
+		enemigo.disparo3.x = 960
+		enemigo.disparo3.direccionx = 0
+		enemigo.disparo3.direcciony = 1
+		enemigo.disparo4.x = 1280
+		enemigo.disparo4.direccionx = 1
+		enemigo.disparo4.direcciony = 0
+		enemigo.disparo5.x = 5000
+		enemigo.disparo6.x = 5000
+
+		z = 7
 
 	animacion_hikaru += 1
 	#print(plataforma.x)
@@ -1014,7 +1089,7 @@ while True:
 	screen.blit(vida_hikaru, [1000, -100])
 	screen.blit(vida_boss, [-25, -100])
 	#plataforma.DibujarObjeto()
-	enemigo.DibujarObjeto()
+	#enemigo.DibujarObjeto()
 	
 	if (cut_scene_manager.cut_scene is None and retry == False) or (level == 0 and z == 0):
 		plataforma.Movimiento()
@@ -1103,19 +1178,20 @@ while True:
 			suelo = True
 		else:
 			suelo = False
-		if enemigo.vidas <= save_vida:
-			save_vida = enemigo.vidas - 10
-			ataque_plataforma = 3
-			cont_plataforma = 0
-		enemigo.Ataque_Plataforma()
-		if cont_plataforma < 600:
-			cont_plataforma += 1
-		else:
-			cont_plataforma = 0
-			if enemigo.vidas <= 75:
-				ataque_plataforma = 1
-			if enemigo.vidas <= 50:
-				ataque_plataforma = 2
+		if retry == False and cut_scene_manager.cut_scene is None and z == 3:
+			if enemigo.vidas <= save_vida:
+				save_vida = enemigo.vidas - 10
+				ataque_plataforma = 3
+				cont_plataforma = 0
+			enemigo.Ataque_Plataforma()
+			if cont_plataforma < 600:
+				cont_plataforma += 1
+			else:
+				cont_plataforma = 0
+				if enemigo.vidas <= 75:
+					ataque_plataforma = 1
+				if enemigo.vidas <= 50:
+					ataque_plataforma = 2
 		screen.blit(columna, [30, 200])
 		screen.blit(columna, [30, 400])
 		screen.blit(columna, [30, 600])
@@ -1130,11 +1206,11 @@ while True:
 		screen.blit(columna, [850, 300])
 		screen.blit(columna, [850, 500])
 		#ANIMACION NINJA
-		if enemigo.vidas <= 75 and animacion_ninja == 3:
+		if enemigo.vidas <= 75 and animacion_ninja == 3 and z == 3:
 			ninja1 = transform.scale(image.load("shoshin-kantetsu_images/ninja1_2.png"), (75, 150))
 			ninja2 = transform.scale(image.load("shoshin-kantetsu_images/ninja2_2.png"), (75, 150))
 			animacion_ninja = 2
-		elif enemigo.vidas <= 50 and animacion_ninja == 2:
+		elif enemigo.vidas <= 50 and animacion_ninja == 2 and z == 3:
 			ninja1 = transform.scale(image.load("shoshin-kantetsu_images/ninja1_3.png"), (75, 150))
 			ninja2 = transform.scale(image.load("shoshin-kantetsu_images/ninja2_3.png"), (75, 150))
 			animacion_ninja = 1
@@ -1148,7 +1224,7 @@ while True:
 			cut_scene_manager.start_cut_scene(CutSceneRetry(plataforma))
 			retry = True
 		
-		if enemigo.vidas <= 0:
+		if enemigo.vidas <= 0 and z == 3:
 			cut_scene_manager.start_cut_scene(CutSceneSecondFinal(plataforma))
 			if cut_scene_manager.cut_scene is None:
 				level = 3
@@ -1173,7 +1249,8 @@ while True:
 		screen.blit(estatua_azul, [1137.5, 35])
 		suelo1.DibujarObjeto()
 
-		enemigo.Colores()
+		if retry == False and cut_scene_manager.cut_scene is None:
+			enemigo.Colores()
 
 		if plataforma.vidas <= 0:
 			screen.fill((0, 0, 0))
@@ -1194,7 +1271,7 @@ while True:
 			if suelo12.check_suelo(plataforma): #DORADO
 				choice = 12
 		
-		if enemigo.vidas <= 0:
+		if enemigo.vidas <= 0 and z == 4:
 			cut_scene_manager.start_cut_scene(CutSceneThreeFinal(plataforma))
 			if cut_scene_manager.cut_scene is None:
 				level = 4
@@ -1222,8 +1299,6 @@ while True:
 			cut_scene_manager.start_cut_scene(CutSceneRetry(plataforma))
 			retry = True
 		
-		print(enemigo.x)
-
 		if enemigo.vidas <= 80 and cont_mago == 200:
 			if enemigo.disparo3.x == 5000:
 				enemigo.disparo3.x = 3000
@@ -1238,16 +1313,18 @@ while True:
 		if enemigo.vidas <= save_vida:
 			cont_mago = 10000
 
+		if enemigo.vidas == 100:
+			enemigo.x = 1150
+
 		if enemigo.vidas <= 80:
-			cont_mago += 1
 			if ataque_mago == -1:
 				ataque_mago = 1
+			else:
+				cont_mago += 1
 		
-		enemigo.Ataque_Orbe(enemigo)
-		enemigo.Ataque_Mago(plataforma, suelo2, suelo3, suelo4, suelo5, suelo6)
-
-		if enemigo.vidas > 80:
-			enemigo.x = 1150
+		if retry == False and cut_scene_manager.cut_scene is None and z == 5:
+			enemigo.Ataque_Orbe(enemigo)
+			enemigo.Ataque_Mago(plataforma, suelo2, suelo3, suelo4, suelo5, suelo6)
 		
 		#ANIMACION MAGO
 		if enemigo.x <= 640:
@@ -1255,7 +1332,7 @@ while True:
 		else:
 			screen.blit(mago2, [enemigo.x-30, enemigo.y-50])
 		
-		if enemigo.vidas <= 0:
+		if enemigo.vidas <= 0 and z == 5:
 			cut_scene_manager.start_cut_scene(CutSceneFourFinal(plataforma))
 			if cut_scene_manager.cut_scene is None:
 				level = 5
@@ -1267,7 +1344,8 @@ while True:
 		else:
 			suelo = False
 		
-		enemigo.Ataque_Espaditas()
+		if retry == False and cut_scene_manager.cut_scene is None:
+			enemigo.Ataque_Espaditas()
 
 		if enemigo.vidas <= 75 and enemigo.vidas > 50:
 			enemigo.x = 150
@@ -1291,8 +1369,55 @@ while True:
 			cut_scene_manager.start_cut_scene(CutSceneRetry(plataforma))
 			retry = True
 
-		if enemigo.vidas <= 0:
-			level = 6
+		if enemigo.vidas <= 0 and z == 6:
+			cut_scene_manager.start_cut_scene(CutSceneFiveMiddle(plataforma))
+			if cut_scene_manager.cut_scene is None:
+				level = 6
+	
+	if level == 6:
+		#COMPROBACION SUELO
+		if suelo1.check_suelo(plataforma) or suelo7.check_suelo(plataforma) or suelo8.check_suelo(plataforma) or suelo9.check_suelo(plataforma) or suelo10.check_suelo(plataforma) or suelo11.check_suelo(plataforma) or suelo12.check_suelo(plataforma):
+			suelo = True
+		else:
+			suelo = False
+		screen.blit(columna_vieja, [30, 147])
+		screen.blit(columna_vieja, [575, 147])
+		screen.blit(columna_vieja, [575, 447])
+		screen.blit(columna_vieja, [1130, 147])
+		screen.blit(columna_vieja, [300, 297])
+		screen.blit(columna_vieja, [850, 297])
+		screen.blit(estatua_rojo, [37.5, 35])
+		screen.blit(estatua_blanco, [307.5, 185])
+		screen.blit(estatua_dorado, [582.5, 35])
+		screen.blit(estatua_negro, [857.5, 185])
+		screen.blit(estatua_azul, [1137.5, 35])
+		suelo1.DibujarObjeto()
+
+		screen.blit(orbe_o, [enemigo.disparo1.x-15, enemigo.disparo1.y-15])
+		screen.blit(orbe_o, [enemigo.disparo2.x-15, enemigo.disparo2.y-15])
+		screen.blit(orbe_o, [enemigo.disparo3.x-15, enemigo.disparo3.y-15])
+		screen.blit(orbe_o, [enemigo.disparo4.x-15, enemigo.disparo4.y-15])
+
+		if retry == False and cut_scene_manager.cut_scene is None:
+			enemigo.Colores()
+			enemigo.Ataque_Orbe(enemigo)
+
+		if plataforma.vidas <= 0:
+			screen.fill((0, 0, 0))
+			cut_scene_manager.start_cut_scene(CutSceneRetry(plataforma))
+			retry = True
+
+		if (ataque == 1 or ataque == 2) and plataforma.direcciony == 0 and color_y >= 50:
+			if suelo8.check_suelo(plataforma): #ROJO
+				choice = 8
+			if suelo9.check_suelo(plataforma): #AZUL
+				choice = 9
+			if suelo10.check_suelo(plataforma): #BLANCO
+				choice = 10
+			if suelo11.check_suelo(plataforma): #NEGRO
+				choice = 11
+			if suelo12.check_suelo(plataforma): #DORADO
+				choice = 12
 			
 	#ANIMACIÓN HIKARU
 	if suelo == False and ataque == 0:
