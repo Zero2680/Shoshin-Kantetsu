@@ -237,7 +237,7 @@ class CutSceneZero:
                 screen,
                 self.text['one'][0:int(self.text_counter)],
                 35,
-                (255, 0, 0),
+                (255, 255, 255),
                 50,
                 650
             )
@@ -247,7 +247,7 @@ class CutSceneZero:
                 screen,
                 self.text['two'][0:int(self.text_counter)],
                 35,
-                (255, 0, 0),
+                (255, 255, 255),
                 50,
                 650
             )
@@ -257,7 +257,7 @@ class CutSceneZero:
                 screen,
                 self.text['three'][0:int(self.text_counter)],
                 35,
-                (255, 0, 0),
+                (255, 255, 255),
                 50,
                 650
             )
@@ -267,7 +267,7 @@ class CutSceneZero:
                 screen,
                 self.text['four'][0:int(self.text_counter)],
                 35,
-                (255, 255, 255),
+                (213, 107, 42),
                 50,
                 650
             )
@@ -277,7 +277,7 @@ class CutSceneZero:
                 screen,
                 self.text['five'][0:int(self.text_counter)],
                 35,
-                (255, 255, 255),
+                (213, 107, 42),
                 50,
                 650
             )
@@ -287,7 +287,7 @@ class CutSceneZero:
                 screen,
                 self.text['six'][0:int(self.text_counter)],
                 35,
-                (255, 255, 255),
+                (213, 107, 42),
                 50,
                 650
             )
@@ -297,7 +297,7 @@ class CutSceneZero:
                 screen,
                 self.text['seven'][0:int(self.text_counter)],
                 35,
-                (255, 0, 0),
+                (255, 255, 255),
                 50,
                 650
             )
@@ -307,7 +307,7 @@ class CutSceneZero:
                 screen,
                 self.text['eight'][0:int(self.text_counter)],
                 35,
-                (255, 0, 0),
+                (255, 255, 255),
                 50,
                 650
             )
@@ -317,7 +317,7 @@ class CutSceneZero:
                 screen,
                 self.text['nine'][0:int(self.text_counter)],
                 35,
-                (255, 0, 0),
+                (255, 255, 255),
                 50,
                 650
             )
@@ -327,7 +327,7 @@ class CutSceneZero:
                 screen,
                 self.text['ten'][0:int(self.text_counter)],
                 35,
-                (255, 0, 0),
+                (255, 255, 255),
                 50,
                 650
             )
@@ -337,7 +337,7 @@ class CutSceneZero:
                 screen,
                 self.text['eleven'][0:int(self.text_counter)],
                 35,
-                (255, 255, 255),
+                (213, 107, 42),
                 50,
                 650
             )
@@ -347,7 +347,7 @@ class CutSceneZero:
                 screen,
                 self.text['twelve'][0:int(self.text_counter)],
                 35,
-                (255, 255, 255),
+                (213, 107, 42),
                 50,
                 650
             )
@@ -357,7 +357,7 @@ class CutSceneZero:
                 screen,
                 self.text['thirteen'][0:int(self.text_counter)],
                 35,
-                (255, 255, 255),
+                (213, 107, 42),
                 50,
                 650
             )
@@ -367,7 +367,7 @@ class CutSceneZero:
                 screen,
                 self.text['fourteen'][0:int(self.text_counter)],
                 35,
-                (255, 0, 0),
+                (255, 255, 255),
                 50,
                 650
             )
@@ -377,7 +377,7 @@ class CutSceneZero:
                 screen,
                 self.text['fiveteen'][0:int(self.text_counter)],
                 35,
-                (255, 0, 0),
+                (88, 86, 87),
                 50,
                 650
             )
@@ -759,7 +759,7 @@ class CutSceneOneStart:
                 screen,
                 self.text['one'][0:int(self.text_counter)],
                 35,
-                (107, 25, 25),
+                (205, 173, 91),
                 50,
                 650
             )
@@ -769,7 +769,7 @@ class CutSceneOneStart:
                 screen,
                 self.text['two'][0:int(self.text_counter)],
                 35,
-                (107, 25, 25),
+                (205, 173, 91),
                 50,
                 650
             )
@@ -779,7 +779,7 @@ class CutSceneOneStart:
                 screen,
                 self.text['three'][0:int(self.text_counter)],
                 35,
-                (107, 25, 25),
+                (205, 173, 91),
                 50,
                 650
             )
@@ -789,7 +789,7 @@ class CutSceneOneStart:
                 screen,
                 self.text['four'][0:int(self.text_counter)],
                 35,
-                (107, 25, 25),
+                (205, 173, 91),
                 50,
                 650
             )
@@ -855,7 +855,7 @@ class CutSceneOneFinal:
                 screen,
                 self.text['one'][0:int(self.text_counter)],
                 35,
-                (107, 25, 25),
+                (205, 173, 91),
                 50,
                 650
             )
@@ -865,7 +865,7 @@ class CutSceneOneFinal:
                 screen,
                 self.text['two'][0:int(self.text_counter)],
                 35,
-                (107, 25, 25),
+                (205, 173, 91),
                 50,
                 650
             )
@@ -875,7 +875,7 @@ class CutSceneOneFinal:
                 screen,
                 self.text['three'][0:int(self.text_counter)],
                 35,
-                (107, 25, 25),
+                (205, 173, 91),
                 50,
                 650
             )
@@ -980,7 +980,7 @@ class CutSceneSecondFinal:
         #Dialogue
         self.text = {
             'one': "If you managed to overcome the wind and the void...",
-            'two': "then perhaps the mountain will accept you.",
+            'two': "Then perhaps the mountain will accept you.",
         }
         self.text_counter = 0
 
@@ -1032,6 +1032,158 @@ class CutSceneSecondFinal:
                 650
             )
 
+class CutSceneThreeStart:
+    
+    def __init__(self, player):
+
+        # Variables
+        self.name = 'three_start'
+        self.step = 0
+        self.timer = time.get_ticks()
+        self.cut_scene_running = True
+        self.time = 0
+
+        # Dialogue
+        self.text = {
+            'one': "The colors of the sky are the judgement of the gods.",
+            'two': "Only those who can read its truth and make it resonate with the earth.",
+            'three': "Will be worthy to continue.",
+        }
+        self.text_counter = 0
+
+    def update(self):
+
+        pressed = key.get_pressed()
+        space = pressed[K_SPACE]
+        
+        if self.time < 100:
+            self.time += 1
+
+        if self.step == 0:
+            if int(self.text_counter) < len(self.text['one']):
+                self.text_counter += 0.4
+            else:
+                if space:
+                    self.step = 1
+                    self.time = 0
+                    self.text_counter = 0
+
+        if self.step == 1:
+            if int(self.text_counter) < len(self.text['two']):
+                self.text_counter += 0.4
+            else:
+                if space and self.time == 100:
+                    self.step = 2
+                    self.time = 0
+                    self.text_counter = 0
+
+        if self.step == 2:
+            if int(self.text_counter) < len(self.text['three']):
+                self.text_counter += 0.4
+            else:
+                if space and self.time == 100:
+                    self.cut_scene_running = False
+
+        return self.cut_scene_running
+
+    def draw(self, screen):
+        
+        if self.step == 0:
+            draw_text(
+                screen,
+                self.text['one'][0:int(self.text_counter)],
+                35,
+                (182, 182, 182),
+                50,
+                650
+            )
+
+        if self.step == 1:
+            draw_text(
+                screen,
+                self.text['two'][0:int(self.text_counter)],
+                35,
+                (182, 182, 182),
+                50,
+                650
+            )
+
+        if self.step == 2:
+            draw_text(
+                screen,
+                self.text['three'][0:int(self.text_counter)],
+                35,
+                (182, 182, 182),
+                50,
+                650
+            )
+
+class CutSceneThreeFinal:
+    
+    def __init__(self, player):
+
+        # Variables
+        self.name = 'three_final'
+        self.step = 0
+        self.timer = time.get_ticks()
+        self.cut_scene_running = True
+        self.time = 0
+
+        #Dialogue
+        self.text = {
+            'one': "You have joined heaven and earth...",
+            'two': "The Path remains open.",
+        }
+        self.text_counter = 0
+
+    def update(self):
+
+        pressed = key.get_pressed()
+        space = pressed[K_SPACE]
+        
+        if self.time < 100:
+            self.time += 1
+
+        if self.step == 0:
+            if int(self.text_counter) < len(self.text['one']):
+                self.text_counter += 0.4
+            else:
+                if space:
+                    self.step = 1
+                    self.time = 0
+                    self.text_counter = 0
+
+        if self.step == 1:
+            if int(self.text_counter) < len(self.text['two']):
+                self.text_counter += 0.4
+            else:
+                if space and self.time == 100:
+                    self.cut_scene_running = False
+
+        return self.cut_scene_running
+
+    def draw(self, screen):
+        
+        if self.step == 0:
+            draw_text(
+                screen,
+                self.text['one'][0:int(self.text_counter)],
+                35,
+                (182, 182, 182),
+                50,
+                650
+            )
+
+        if self.step == 1:
+            draw_text(
+                screen,
+                self.text['two'][0:int(self.text_counter)],
+                35,
+                (182, 182, 182),
+                50,
+                650
+            )
+
 class CutSceneFourStart:
     
     def __init__(self, player):
@@ -1047,7 +1199,7 @@ class CutSceneFourStart:
         self.text = {
             'one': "You have come too far, swordsman.",
             'two': "The Path is not for those who walk...",
-            'three': "but for those who rise.",
+            'three': "But for those who rise.",
         }
         self.text_counter = 0
 
@@ -1184,12 +1336,12 @@ class CutSceneFourFinal:
                 650
             )
 
-class CutSceneThreeStart:
+class CutSceneFiveStart:
     
     def __init__(self, player):
 
         # Variables
-        self.name = 'three_start'
+        self.name = 'five_start'
         self.step = 0
         self.timer = time.get_ticks()
         self.cut_scene_running = True
@@ -1197,9 +1349,10 @@ class CutSceneThreeStart:
 
         # Dialogue
         self.text = {
-            'one': "The colors of the sky are the judgement of the gods.",
-            'two': "Only those who can read its truth and make it resonate with the earth.",
-            'three': "will be worthy to continue.",
+            'one': "I told you again and again... you were not born to be a swordsman.",
+            'two': "Your edge is weak, your spirit, trembling.",
+            'three': "And yet you climbed up here?",
+            'four': "Then I will seal your fate myself.",
         }
         self.text_counter = 0
 
@@ -1228,9 +1381,18 @@ class CutSceneThreeStart:
                     self.step = 2
                     self.time = 0
                     self.text_counter = 0
-
+        
         if self.step == 2:
             if int(self.text_counter) < len(self.text['three']):
+                self.text_counter += 0.4
+            else:
+                if space and self.time == 100:
+                    self.step = 3
+                    self.time = 0
+                    self.text_counter = 0
+
+        if self.step == 3:
+            if int(self.text_counter) < len(self.text['four']):
                 self.text_counter += 0.4
             else:
                 if space and self.time == 100:
@@ -1245,7 +1407,7 @@ class CutSceneThreeStart:
                 screen,
                 self.text['one'][0:int(self.text_counter)],
                 35,
-                (182, 182, 182),
+                (255, 255, 255),
                 50,
                 650
             )
@@ -1255,7 +1417,7 @@ class CutSceneThreeStart:
                 screen,
                 self.text['two'][0:int(self.text_counter)],
                 35,
-                (182, 182, 182),
+                (255, 255, 255),
                 50,
                 650
             )
@@ -1265,26 +1427,41 @@ class CutSceneThreeStart:
                 screen,
                 self.text['three'][0:int(self.text_counter)],
                 35,
-                (182, 182, 182),
+                (255, 255, 255),
                 50,
                 650
             )
 
-class CutSceneThreeFinal:
+        if self.step == 3:
+            draw_text(
+                screen,
+                self.text['four'][0:int(self.text_counter)],
+                35,
+                (255, 255, 255),
+                50,
+                650
+            )
+
+class CutSceneFiveMiddle:
     
     def __init__(self, player):
 
         # Variables
-        self.name = 'three_final'
+        self.name = 'five_middle'
         self.step = 0
         self.timer = time.get_ticks()
         self.cut_scene_running = True
         self.time = 0
 
-        #Dialogue
+        # Dialogue
         self.text = {
-            'one': "You have joined heaven and earth...",
-            'two': "The Path remains open.",
+            'one': "Is that all?",
+            'two': "Is that the great swordsman you swore you'd be?",
+            'three': "You can barely stand...",
+            'four': "And you think you can beat me.",
+            'five': "How naive! You haven't seen who your father really is.",
+            'six': "Now you will face the true Guardian of the Mountain!",
+            'seven': "The darkness that neither you nor your spirit will be able to cut!",
         }
         self.text_counter = 0
 
@@ -1310,6 +1487,51 @@ class CutSceneThreeFinal:
                 self.text_counter += 0.4
             else:
                 if space and self.time == 100:
+                    self.step = 2
+                    self.time = 0
+                    self.text_counter = 0
+        
+        if self.step == 2:
+            if int(self.text_counter) < len(self.text['three']):
+                self.text_counter += 0.4
+            else:
+                if space and self.time == 100:
+                    self.step = 3
+                    self.time = 0
+                    self.text_counter = 0
+
+        if self.step == 3:
+            if int(self.text_counter) < len(self.text['four']):
+                self.text_counter += 0.4
+            else:
+                if space and self.time == 100:
+                    self.step = 4
+                    self.time = 0
+                    self.text_counter = 0
+        
+        if self.step == 4:
+            if int(self.text_counter) < len(self.text['five']):
+                self.text_counter += 0.4
+            else:
+                if space and self.time == 100:
+                    self.step = 5
+                    self.time = 0
+                    self.text_counter = 0
+
+        if self.step == 5:
+            if int(self.text_counter) < len(self.text['six']):
+                self.text_counter += 0.4
+            else:
+                if space and self.time == 100:
+                    self.step = 6
+                    self.time = 0
+                    self.text_counter = 0
+
+        if self.step == 6:
+            if int(self.text_counter) < len(self.text['seven']):
+                self.text_counter += 0.4
+            else:
+                if space and self.time == 100:
                     self.cut_scene_running = False
 
         return self.cut_scene_running
@@ -1321,7 +1543,7 @@ class CutSceneThreeFinal:
                 screen,
                 self.text['one'][0:int(self.text_counter)],
                 35,
-                (182, 182, 182),
+                (255, 255, 255),
                 50,
                 650
             )
@@ -1331,7 +1553,243 @@ class CutSceneThreeFinal:
                 screen,
                 self.text['two'][0:int(self.text_counter)],
                 35,
-                (182, 182, 182),
+                (255, 255, 255),
+                50,
+                650
+            )
+        
+        if self.step == 2:
+            draw_text(
+                screen,
+                self.text['three'][0:int(self.text_counter)],
+                35,
+                (255, 255, 255),
+                50,
+                650
+            )
+
+        if self.step == 3:
+            draw_text(
+                screen,
+                self.text['four'][0:int(self.text_counter)],
+                35,
+                (255, 255, 255),
+                50,
+                650
+            )
+
+        if self.step == 4:
+            draw_text(
+                screen,
+                self.text['five'][0:int(self.text_counter)],
+                35,
+                (255, 255, 255),
+                50,
+                650
+            )
+
+        if self.step == 5:
+            draw_text(
+                screen,
+                self.text['six'][0:int(self.text_counter)],
+                35,
+                (255, 255, 255),
+                50,
+                650
+            )
+
+        if self.step == 6:
+            draw_text(
+                screen,
+                self.text['seven'][0:int(self.text_counter)],
+                35,
+                (107, 25, 25),
+                50,
+                650
+            )
+
+class CutSceneFiveFinal:
+    
+    def __init__(self, player):
+
+        # Variables
+        self.name = 'five_final'
+        self.step = 0
+        self.timer = time.get_ticks()
+        self.cut_scene_running = True
+        self.time = 0
+
+        # Dialogue
+        self.text = {
+            'one': "I thought you would never reach my level.",
+            'two': "That your steps would always fall behind mine.",
+            'three': "But today... you caught up to me.",
+            'four': "And you surpassed me.",
+            'five': "You are no longer the son who sought my approval.",
+            'six': "You are the heir of the Path to the Mountain.",
+            'seven': "The guardian… is no longer me.",
+            'eight': "Now, it is you.",
+        }
+        self.text_counter = 0
+
+    def update(self):
+
+        pressed = key.get_pressed()
+        space = pressed[K_SPACE]
+        
+        if self.time < 100:
+            self.time += 1
+
+        if self.step == 0:
+            if int(self.text_counter) < len(self.text['one']):
+                self.text_counter += 0.4
+            else:
+                if space:
+                    self.step = 1
+                    self.time = 0
+                    self.text_counter = 0
+
+        if self.step == 1:
+            if int(self.text_counter) < len(self.text['two']):
+                self.text_counter += 0.4
+            else:
+                if space and self.time == 100:
+                    self.step = 2
+                    self.time = 0
+                    self.text_counter = 0
+        
+        if self.step == 2:
+            if int(self.text_counter) < len(self.text['three']):
+                self.text_counter += 0.4
+            else:
+                if space and self.time == 100:
+                    self.step = 3
+                    self.time = 0
+                    self.text_counter = 0
+
+        if self.step == 3:
+            if int(self.text_counter) < len(self.text['four']):
+                self.text_counter += 0.4
+            else:
+                if space and self.time == 100:
+                    self.step = 4
+                    self.time = 0
+                    self.text_counter = 0
+        
+        if self.step == 4:
+            if int(self.text_counter) < len(self.text['five']):
+                self.text_counter += 0.4
+            else:
+                if space and self.time == 100:
+                    self.step = 5
+                    self.time = 0
+                    self.text_counter = 0
+
+        if self.step == 5:
+            if int(self.text_counter) < len(self.text['six']):
+                self.text_counter += 0.4
+            else:
+                if space and self.time == 100:
+                    self.step = 6
+                    self.time = 0
+                    self.text_counter = 0
+
+        if self.step == 6:
+            if int(self.text_counter) < len(self.text['seven']):
+                self.text_counter += 0.4
+            else:
+                if space and self.time == 100:
+                    self.step = 7
+                    self.time = 0
+                    self.text_counter = 0
+
+        if self.step == 7:
+            if int(self.text_counter) < len(self.text['eight']):
+                self.text_counter += 0.4
+            else:
+                if space and self.time == 100:
+                    self.cut_scene_running = False
+
+        return self.cut_scene_running
+
+    def draw(self, screen):
+        
+        if self.step == 0:
+            draw_text(
+                screen,
+                self.text['one'][0:int(self.text_counter)],
+                35,
+                (255, 255, 255),
+                50,
+                650
+            )
+
+        if self.step == 1:
+            draw_text(
+                screen,
+                self.text['two'][0:int(self.text_counter)],
+                35,
+                (255, 255, 255),
+                50,
+                650
+            )
+        
+        if self.step == 2:
+            draw_text(
+                screen,
+                self.text['three'][0:int(self.text_counter)],
+                35,
+                (255, 255, 255),
+                50,
+                650
+            )
+
+        if self.step == 3:
+            draw_text(
+                screen,
+                self.text['four'][0:int(self.text_counter)],
+                35,
+                (255, 255, 255),
+                50,
+                650
+            )
+
+        if self.step == 4:
+            draw_text(
+                screen,
+                self.text['five'][0:int(self.text_counter)],
+                35,
+                (255, 255, 255),
+                50,
+                650
+            )
+
+        if self.step == 5:
+            draw_text(
+                screen,
+                self.text['six'][0:int(self.text_counter)],
+                35,
+                (107, 25, 25),
+                50,
+                650
+            )
+
+        if self.step == 6:
+            draw_text(
+                screen,
+                self.text['seven'][0:int(self.text_counter)],
+                35,
+                (107, 25, 25),
+                50,
+                650
+            )
+        
+        if self.step == 7:
+            draw_text(
+                screen,
+                self.text['eight'][0:int(self.text_counter)],
+                35,
+                (107, 25, 25),
                 50,
                 650
             )
