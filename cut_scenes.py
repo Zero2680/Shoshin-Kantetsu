@@ -377,7 +377,7 @@ class CutSceneZero:
                 screen,
                 self.text['fiveteen'][0:int(self.text_counter)],
                 35,
-                (88, 86, 87),
+                (255, 255, 255),
                 50,
                 650
             )
@@ -1792,6 +1792,52 @@ class CutSceneFiveFinal:
                 (107, 25, 25),
                 50,
                 650
+            )
+
+class CutSceneThanks:
+    
+    def __init__(self, player):
+
+        # Variables
+        self.name = 'thanks'
+        self.step = 0
+        self.timer = time.get_ticks()
+        self.cut_scene_running = True
+        self.time = 0
+
+        # Dialogue
+        self.text = {
+            'one': "THANKS FOR PLAYING",
+        }
+        self.text_counter = 0
+
+    def update(self):
+
+        pressed = key.get_pressed()
+        space = pressed[K_SPACE]
+        
+        if self.time < 500:
+            self.time += 1
+
+        if self.step == 0:
+            if int(self.text_counter) < len(self.text['one']):
+                self.text_counter += 0.4
+            else:
+                if space and self.time == 500:
+                    self.cut_scene_running = False
+
+        return self.cut_scene_running
+
+    def draw(self, screen):
+        
+        if self.step == 0:
+            draw_text(
+                screen,
+                self.text['one'][0:int(self.text_counter)],
+                100,
+                (255, 255, 255),
+                120,
+                300
             )
 
 class CutSceneManager:
