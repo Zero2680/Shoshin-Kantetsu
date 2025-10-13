@@ -1582,8 +1582,7 @@ while True:
 				screen.blit(oscuridad2, [enemigo.x-60, enemigo.y-55])
 
 			if plataforma.y > 720:
-				plataforma.y = 0
-				#plataforma.vidas = 0
+				plataforma.vidas = 0
 			if plataforma.vidas < 40:
 				plataforma.vidas = 100
 
