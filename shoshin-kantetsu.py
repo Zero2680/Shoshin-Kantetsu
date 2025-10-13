@@ -843,12 +843,12 @@ while True:
 		cont_mago = 0
 		oscuridad = 0
 		opciones = [7,10,11]
-		#cut_scene_manager.start_cut_scene(CutSceneZero(plataforma))
+		cut_scene_manager.start_cut_scene(CutSceneZero(plataforma))
 		if cut_scene_manager.cut_scene is None:
 			z = 0
 	if level == 0 and z == 0: #TUTORIAL
 		fondo = fondo1
-		#cut_scene_manager.start_cut_scene(CutSceneTutorial(plataforma))
+		cut_scene_manager.start_cut_scene(CutSceneTutorial(plataforma))
 		if cut_scene_manager.cut_scene is None:
 			level = 1
 			z = 1
@@ -1083,8 +1083,9 @@ while True:
 		suelo14.y = 3000
 		enemigo.vidas = 100
 		enemigo.x = 3000
-		plataforma.x = 650
-		plataforma.y = 400
+		enemigo.largo = 80
+		plataforma.x = 625
+		plataforma.y = 350
 
 		enemigo.disparo1.largo = 20
 		enemigo.disparo1.ancho = 20
@@ -1182,27 +1183,27 @@ while True:
 				enemigo.Terremoto_Gordo()
 				screen.blit(slash, [enemigo.disparo1.x-50, enemigo.disparo1.y])
 				screen.blit(slash_, [enemigo.disparo2.x-20, enemigo.disparo2.y])
-		if enemigo.disparo1.x != 1380 and enemigo.disparo2.x != -100:
-			screen.blit(gordo_attack, [enemigo.x-40, enemigo.y-32.5])
-		elif enemigo.direccionx != 2:
-			animacion_gordo += 1
-			if animacion_gordo <= 100:
-				if enemigo.direccionx == 0:
-					screen.blit(gordo_run_, [enemigo.x-40, enemigo.y-32.5])
-				else:
-					screen.blit(gordo_run, [enemigo.x-40, enemigo.y-32.5])
-			elif animacion_gordo > 100:
-				if enemigo.direccionx == 0:
-					screen.blit(gordo_run2_, [enemigo.x-40, enemigo.y-32.5])
-				else:
-					screen.blit(gordo_run2, [enemigo.x-40, enemigo.y-32.5])
-				if animacion_gordo >= 200:
-					animacion_gordo = 0
-		else:
-			if enemigo.x <= 640:
-				screen.blit(gordo1, [enemigo.x-40, enemigo.y-32.5])
+			if enemigo.disparo1.x != 1380 and enemigo.disparo2.x != -100:
+				screen.blit(gordo_attack, [enemigo.x-40, enemigo.y-32.5])
+			elif enemigo.direccionx != 2:
+				animacion_gordo += 1
+				if animacion_gordo <= 100:
+					if enemigo.direccionx == 0:
+						screen.blit(gordo_run_, [enemigo.x-40, enemigo.y-32.5])
+					else:
+						screen.blit(gordo_run, [enemigo.x-40, enemigo.y-32.5])
+				elif animacion_gordo > 100:
+					if enemigo.direccionx == 0:
+						screen.blit(gordo_run2_, [enemigo.x-40, enemigo.y-32.5])
+					else:
+						screen.blit(gordo_run2, [enemigo.x-40, enemigo.y-32.5])
+					if animacion_gordo >= 200:
+						animacion_gordo = 0
 			else:
-				screen.blit(gordo2, [enemigo.x-40, enemigo.y-32.5])
+				if enemigo.x <= 640:
+					screen.blit(gordo1, [enemigo.x-40, enemigo.y-32.5])
+				else:
+					screen.blit(gordo2, [enemigo.x-40, enemigo.y-32.5])
 		
 		if plataforma.vidas <= 0:
 			screen.fill((0, 0, 0))
@@ -1321,12 +1322,13 @@ while True:
 				level = 4
 	
 	if level == 4:
-		screen.blit(orbe, [enemigo.disparo1.x-15, enemigo.disparo1.y-15])
-		screen.blit(orbe, [enemigo.disparo2.x-15, enemigo.disparo2.y-15])
-		screen.blit(orbe, [enemigo.disparo3.x-15, enemigo.disparo3.y-15])
-		screen.blit(orbe, [enemigo.disparo4.x-15, enemigo.disparo4.y-15])
-		screen.blit(orbe, [enemigo.disparo5.x-15, enemigo.disparo5.y-15])
-		screen.blit(orbe, [enemigo.disparo6.x-15, enemigo.disparo6.y-15])
+		if cut_scene_manager.cut_scene is None:
+			screen.blit(orbe, [enemigo.disparo1.x-15, enemigo.disparo1.y-15])
+			screen.blit(orbe, [enemigo.disparo2.x-15, enemigo.disparo2.y-15])
+			screen.blit(orbe, [enemigo.disparo3.x-15, enemigo.disparo3.y-15])
+			screen.blit(orbe, [enemigo.disparo4.x-15, enemigo.disparo4.y-15])
+			screen.blit(orbe, [enemigo.disparo5.x-15, enemigo.disparo5.y-15])
+			screen.blit(orbe, [enemigo.disparo6.x-15, enemigo.disparo6.y-15])
 		suelo2.DibujarObjeto()
 		suelo3.DibujarObjeto()
 		suelo4.DibujarObjeto()
@@ -1390,6 +1392,11 @@ while True:
 		
 		if retry == False and cut_scene_manager.cut_scene is None:
 			enemigo.Ataque_Espaditas()
+			#ANIMACION PADRE
+			if enemigo.x <= 640:
+				screen.blit(padre1, [enemigo.x-60, enemigo.y-55])
+			else:
+				screen.blit(padre2, [enemigo.x-60, enemigo.y-55])
 
 		if enemigo.vidas <= 75 and enemigo.vidas > 50:
 			enemigo.x = 150
@@ -1401,12 +1408,6 @@ while True:
 		
 		if enemigo.vidas <= 50 and enemigo.vidas > 40:
 			suelo1.reducir(enemigo)
-		
-		#ANIMACION PADRE
-		if enemigo.x <= 640:
-			screen.blit(padre1, [enemigo.x-60, enemigo.y-55])
-		else:
-			screen.blit(padre2, [enemigo.x-60, enemigo.y-55])
 		
 		if plataforma.vidas <= 0:
 			screen.fill((0, 0, 0))
@@ -1472,9 +1473,9 @@ while True:
 			suelo6.DibujarObjeto()
 
 			if enemigo.x <= 640:
-				screen.blit(oscuridad1, [enemigo.x-40, enemigo.y-50])
+				screen.blit(oscuridad1, [enemigo.x-60, enemigo.y-50])
 			else:
-				screen.blit(oscuridad2, [enemigo.x-30, enemigo.y-50])
+				screen.blit(oscuridad2, [enemigo.x-60, enemigo.y-50])
 
 			if suelo2.check_suelo(plataforma) or suelo3.check_suelo(plataforma) or suelo4.check_suelo(plataforma) or suelo5.check_suelo(plataforma) or suelo6.check_suelo(plataforma):
 				suelo = True
@@ -1489,7 +1490,7 @@ while True:
 			if enemigo.vidas == 70:
 				enemigo.x = 1150
 				if z == 7:
-					enemigo.y = 550
+					enemigo.y = 520
 					enemigo.disparo3.ancho = enemigo.ancho
 					enemigo.disparo3.largo = 100
 					enemigo.disparo3.y = 500
@@ -1502,6 +1503,14 @@ while True:
 					enemigo.disparo6.ancho = enemigo.ancho
 					enemigo.disparo6.largo = 100
 					enemigo.disparo6.y = 500
+					enemigo.espada1.y = -100
+					enemigo.espada2.y = -100
+					enemigo.disparo1.x = 1380
+					enemigo.disparo2.x = -100
+					enemigo.disparo3.x = 1380
+					enemigo.disparo4.x = -100
+					enemigo.disparo5.x = 1380
+					enemigo.disparo6.x = -100
 					z = 8
 
 			if enemigo.vidas <= 69:
@@ -1526,6 +1535,8 @@ while True:
 				plataforma.x = 625
 				plataforma.y = 350
 				cont_plataforma = 0
+				ataque_plataforma = 3
+				save_vida = enemigo.vidas - 5
 				enemigo.disparo1.largo = 20
 				enemigo.disparo1.ancho = 20
 				enemigo.disparo2.largo = 20
@@ -1565,9 +1576,20 @@ while True:
 			screen.blit(columna_vieja, [300, 297])
 			screen.blit(columna_vieja, [575, 447])
 			screen.blit(columna_vieja, [850, 297])
+			if enemigo.x <= 640:
+				screen.blit(oscuridad1, [enemigo.x-60, enemigo.y-55])
+			else:
+				screen.blit(oscuridad2, [enemigo.x-60, enemigo.y-55])
 
 			if plataforma.y > 720:
-				plataforma.vidas = 0
+				plataforma.y = 0
+				#plataforma.vidas = 0
+			if plataforma.vidas < 40:
+				plataforma.vidas = 100
+
+			if enemigo.y != 3000:
+				enemigo.x = 620
+				enemigo.y = 200
 
 			if suelo7.check_suelo(plataforma) or suelo10.check_suelo(plataforma) or suelo11.check_suelo(plataforma):
 				suelo = True
@@ -1577,89 +1599,115 @@ while True:
 			if retry == False and cut_scene_manager.cut_scene is None:
 				enemigo.Ataque_Espaditas()
 				if enemigo.vidas <= save_vida:
-					save_vida = enemigo.vidas - 10
+					save_vida = enemigo.vidas - 5
 					ataque_plataforma = 3
 					cont_plataforma = 0
 				enemigo.Ataque_Plataforma()
 				if cont_plataforma < 600:
 					cont_plataforma += 1
-				else:
-					cont_plataforma = 0
-					ataque_plataforma = 3
 			
 			if enemigo.vidas <= 0 and z == 9:
 				cut_scene_manager.start_cut_scene(CutSceneFiveFinal(plataforma))
 				if cut_scene_manager.cut_scene is None:
 					level = 7
 
-			
-	#ANIMACIÓN HIKARU
-	if suelo == False and ataque == 0:
-		if plataforma.direccionx == 0:
-			screen.blit(hikaru_jump_, [plataforma.x-10, plataforma.y-20])
-		elif plataforma.direccionx == 1:
-			screen.blit(hikaru_jump, [plataforma.x-20, plataforma.y-20])
+	if level == 7:
+		screen.fill((0, 0, 0))
+		cut_scene_manager.start_cut_scene(CutSceneThanks(plataforma))
+		if cut_scene_manager.cut_scene is None:
+			quit()
+			exit()
 
-	if quieto == True and correr == False and ataque == 0 and suelo == True:
-		if plataforma.direccionx == 0:
-			if animacion_hikaru <= 100:
-				screen.blit(hikaru1_, [plataforma.x-10, plataforma.y-20])
-			if animacion_hikaru > 100:
-				screen.blit(hikaru2_, [plataforma.x-10, plataforma.y-20])
-				if animacion_hikaru >= 200:
-					animacion_hikaru = 0
-		elif plataforma.direccionx == 1:
-			if animacion_hikaru <= 100:
-				screen.blit(hikaru1, [plataforma.x-20, plataforma.y-20])
-			if animacion_hikaru > 100:
-				screen.blit(hikaru2, [plataforma.x-20, plataforma.y-20])
-				if animacion_hikaru >= 200:
-					animacion_hikaru = 0
-	
-	if plataforma.direcciony == 0 and suelo == True and quieto == False and ataque == 0:
-		if plataforma.direccionx == 0:
-			screen.blit(hikaru_agachar_, [plataforma.x-10, plataforma.y-20])
-		elif plataforma.direccionx == 1:
-			screen.blit(hikaru_agachar, [plataforma.x-20, plataforma.y-20])
-
-	if correr == True and suelo == True:
-		if plataforma.direccionx == 0:
-			if animacion_hikaru <= 50:
-				screen.blit(hikaru_run_, [plataforma.x-10, plataforma.y-20])
-			if animacion_hikaru > 50:
-				screen.blit(hikaru_run2_, [plataforma.x-10, plataforma.y-20])
-				if animacion_hikaru >= 100:
-					animacion_hikaru = 0
-		elif plataforma.direccionx == 1:
-			if animacion_hikaru <= 50:
-				screen.blit(hikaru_run, [plataforma.x-20, plataforma.y-20])
-			if animacion_hikaru > 50:
-				screen.blit(hikaru_run2, [plataforma.x-20, plataforma.y-20])
-				if animacion_hikaru >= 100:
-					animacion_hikaru = 0
-
-	if ataque == 1:
-		if ataque_espada == 0:
-			ataque_espada = 1
-		if plataforma.direcciony == 0:
-			screen.blit(hikaru_attackdown, [plataforma.x-32.5, plataforma.y-32.5])
-		elif plataforma.direcciony == 1:
-			screen.blit(hikaru_attackup, [plataforma.x-32.5, plataforma.y-32.5])
-		else:
+	if cut_scene_manager.cut_scene is None or level == 0:
+		#ANIMACIÓN HIKARU
+		if suelo == False and ataque == 0:
 			if plataforma.direccionx == 0:
-				screen.blit(hikaru_attack_, [plataforma.x-22.5, plataforma.y-32.5])
-			if plataforma.direccionx == 1:
-				screen.blit(hikaru_attack, [plataforma.x-32.5, plataforma.y-32.5])
-	elif ataque == 2:
-		if plataforma.direcciony == 0:
-			screen.blit(hikaru_attackdown, [plataforma.x-32.5, plataforma.y-32.5])
-		elif plataforma.direcciony == 1:
-			screen.blit(hikaru_attackup, [plataforma.x-32.5, plataforma.y-32.5])
-		else:
+				screen.blit(hikaru_jump_, [plataforma.x-10, plataforma.y-20])
+			elif plataforma.direccionx == 1:
+				screen.blit(hikaru_jump, [plataforma.x-20, plataforma.y-20])
+
+		if quieto == True and correr == False and ataque == 0 and suelo == True:
 			if plataforma.direccionx == 0:
-				screen.blit(hikaru_attack2_, [plataforma.x-22.5, plataforma.y-32.5])
-			if plataforma.direccionx == 1:
-				screen.blit(hikaru_attack2, [plataforma.x-32.5, plataforma.y-32.5])
+				if animacion_hikaru <= 100:
+					screen.blit(hikaru1_, [plataforma.x-10, plataforma.y-20])
+				if animacion_hikaru > 100:
+					screen.blit(hikaru2_, [plataforma.x-10, plataforma.y-20])
+					if animacion_hikaru >= 200:
+						animacion_hikaru = 0
+			elif plataforma.direccionx == 1:
+				if animacion_hikaru <= 100:
+					screen.blit(hikaru1, [plataforma.x-20, plataforma.y-20])
+				if animacion_hikaru > 100:
+					screen.blit(hikaru2, [plataforma.x-20, plataforma.y-20])
+					if animacion_hikaru >= 200:
+						animacion_hikaru = 0
+		
+		if plataforma.direcciony == 0 and suelo == True and quieto == False and ataque == 0:
+			if plataforma.direccionx == 0:
+				screen.blit(hikaru_agachar_, [plataforma.x-10, plataforma.y-20])
+			elif plataforma.direccionx == 1:
+				screen.blit(hikaru_agachar, [plataforma.x-20, plataforma.y-20])
+
+		if correr == True and suelo == True:
+			if plataforma.direccionx == 0:
+				if animacion_hikaru <= 50:
+					screen.blit(hikaru_run_, [plataforma.x-10, plataforma.y-20])
+				if animacion_hikaru > 50:
+					screen.blit(hikaru_run2_, [plataforma.x-10, plataforma.y-20])
+					if animacion_hikaru >= 100:
+						animacion_hikaru = 0
+			elif plataforma.direccionx == 1:
+				if animacion_hikaru <= 50:
+					screen.blit(hikaru_run, [plataforma.x-20, plataforma.y-20])
+				if animacion_hikaru > 50:
+					screen.blit(hikaru_run2, [plataforma.x-20, plataforma.y-20])
+					if animacion_hikaru >= 100:
+						animacion_hikaru = 0
+
+		if ataque == 1:
+			if ataque_espada == 0:
+				ataque_espada = 1
+			if plataforma.direcciony == 0:
+				screen.blit(hikaru_attackdown, [plataforma.x-32.5, plataforma.y-32.5])
+			elif plataforma.direcciony == 1:
+				screen.blit(hikaru_attackup, [plataforma.x-32.5, plataforma.y-32.5])
+			else:
+				if plataforma.direccionx == 0:
+					screen.blit(hikaru_attack_, [plataforma.x-22.5, plataforma.y-32.5])
+				if plataforma.direccionx == 1:
+					screen.blit(hikaru_attack, [plataforma.x-32.5, plataforma.y-32.5])
+		elif ataque == 2:
+			if plataforma.direcciony == 0:
+				screen.blit(hikaru_attackdown, [plataforma.x-32.5, plataforma.y-32.5])
+			elif plataforma.direcciony == 1:
+				screen.blit(hikaru_attackup, [plataforma.x-32.5, plataforma.y-32.5])
+			else:
+				if plataforma.direccionx == 0:
+					screen.blit(hikaru_attack2_, [plataforma.x-22.5, plataforma.y-32.5])
+				if plataforma.direccionx == 1:
+					screen.blit(hikaru_attack2, [plataforma.x-32.5, plataforma.y-32.5])
+
+	if cut_scene_manager.cut_scene is not None:
+		if level == 1:
+			screen.blit(hikaru1, [110, 555])
+			screen.blit(gordo2, [1110, 517.5])
+		if level == 2:
+			screen.blit(hikaru1, [330, 455])
+			screen.blit(ninja2, [875, 150])
+		if level == 3:
+			screen.blit(hikaru1, [110, 555])
+		if level == 4:
+			screen.blit(hikaru1, [110, 555])
+			screen.blit(mago2, [1120, 500])
+		if level == 5 and enemigo.vidas > 50:
+			screen.blit(hikaru1, [110, 430])
+			screen.blit(padre2, [1090, 345])
+		if level == 5 and enemigo.vidas < 50:
+			screen.blit(hikaru1, [460, 430])
+			screen.blit(padre2, [740, 345])
+		if level == 6:
+			screen.blit(hikaru1, [605, 400])
+			screen.blit(oscuridad2, [560, 145])
 
 	if z == -1:
 		screen.fill((0, 0, 0))
