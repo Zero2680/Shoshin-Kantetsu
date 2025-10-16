@@ -593,7 +593,7 @@ class CutSceneTutorial:
                 screen,
                 self.text['five'][0:int(self.text_counter)],
                 35,
-                (255, 255, 255),
+                (213, 107, 42),
                 50,
                 650
             )
@@ -603,7 +603,7 @@ class CutSceneTutorial:
                 screen,
                 self.text['six'][0:int(self.text_counter)],
                 35,
-                (255, 255, 255),
+                (213, 107, 42),
                 50,
                 650
             )
