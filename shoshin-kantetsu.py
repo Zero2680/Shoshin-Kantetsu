@@ -596,13 +596,13 @@ class Disparo(Objeto):
 			self.y = 100
 		if self.x < 2000:
 			if self.direccionx == 0:
-				self.x -= 2
+				self.x -= 1.5
 			if self.direccionx == 1:
-				self.x += 2
+				self.x += 1.5
 			if self.direcciony == 0:
-				self.y -= 2
+				self.y -= 1.5
 			if self.direcciony == 1:
-				self.y += 2
+				self.y += 1.5
 			if self.x <= 0:
 				self.direccionx = 1
 			if self.x >= 1260:
@@ -622,7 +622,7 @@ class Disparo(Objeto):
 	
 	def Movimiento_Espadita(self):
 		if Personaje.check_colisiones(self, plataforma) == True:
-			plataforma.vidas -= 20
+			plataforma.vidas -= 10
 			self.x = 1280
 			self.y = 210
 		if self.direccionx == 0:
@@ -1008,7 +1008,9 @@ while True:
 			z = 5
 	if level == 5 and z == 5:
 		fondo = fondo6
+		suelo1.x = 0
 		suelo1.y = 474
+		suelo1.ancho = 1280
 		enemigo.vidas = 100
 		enemigo.x = 1150
 		enemigo.y = 400
@@ -1052,7 +1054,9 @@ while True:
 		oscuridad = 1
 
 		fondo = fondo7
+		suelo1.x = 0
 		suelo1.y = 599
+		suelo1.ancho = 1280
 		suelo2.x = 0
 		suelo2.y = 599
 		suelo2.ancho = 256
@@ -1409,6 +1413,8 @@ while True:
 		if enemigo.vidas <= 50 and enemigo.vidas > 40:
 			suelo1.reducir(enemigo)
 		
+		if plataforma.y > 720:
+			plataforma.vidas = 0
 		if plataforma.vidas <= 0:
 			screen.fill((0, 0, 0))
 			cut_scene_manager.start_cut_scene(CutSceneRetry(plataforma))
@@ -1576,15 +1582,14 @@ while True:
 			screen.blit(columna_vieja, [300, 297])
 			screen.blit(columna_vieja, [575, 447])
 			screen.blit(columna_vieja, [850, 297])
-			if enemigo.x <= 640:
-				screen.blit(oscuridad1, [enemigo.x-60, enemigo.y-55])
-			else:
-				screen.blit(oscuridad2, [enemigo.x-60, enemigo.y-55])
+			if cut_scene_manager.cut_scene is None:
+				if enemigo.x <= 640:
+					screen.blit(oscuridad1, [enemigo.x-60, enemigo.y-55])
+				else:
+					screen.blit(oscuridad2, [enemigo.x-60, enemigo.y-55])
 
 			if plataforma.y > 720:
 				plataforma.vidas = 0
-			if plataforma.vidas < 40:
-				plataforma.vidas = 100
 
 			if enemigo.y != 3000:
 				enemigo.x = 620
@@ -1720,13 +1725,6 @@ while True:
 				exit()
 		if evento.type==KEYDOWN:
 			quieto = False
-			if evento.key == K_RIGHT:
-				level += 1
-			if evento.key == K_LEFT:
-				enemigo.vidas -= 30
-			if evento.key == K_UP:
-				z = 5
-				level = 5
 			if evento.key == K_z and retry == True:
 				if oscuridad == 0:
 					cut_scene_manager.cut_scenes_complete = []
