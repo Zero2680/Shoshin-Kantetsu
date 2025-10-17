@@ -272,6 +272,11 @@ class Boss(Objeto):
 						self.y = 3000
 				ataque_plataforma = 0
 		if aleatorio3 != -1:
+			if cont_plataforma > 300:
+				if oscuridad == 0:
+					sound_ninja.play()
+				else:
+					sound_oscuridad.play()
 			if aleatorio1 == 2 or aleatorio2 == 2 or aleatorio3 == 2:
 				if 0 < cont_plataforma <= 300:
 					screen.blit(ninja_preataque, (587.5, 499))
@@ -509,6 +514,8 @@ class Boss(Objeto):
 		
 	def Colores(self):
 		global color, choice, racha, color_x, color_y, oscuridad
+		if color_y == 0:
+			sound_colores.play()
 		color_y += 0.25
 		if self.vidas < 75 or oscuridad == 1:
 			color_y += 0.25
@@ -580,6 +587,7 @@ class Disparo(Objeto):
 			if self.vidas == 0:
 				disparo1.x = self.x
 				disparo2.x = self.x
+				sound_espada_gordo.play()
 				self.vidas = 1
 			disparo1.Movimiento_Terremoto1()
 			disparo2.Movimiento_Terremoto2()
@@ -604,12 +612,16 @@ class Disparo(Objeto):
 			if self.direcciony == 1:
 				self.y += 1.5
 			if self.x <= 0:
+				sound_orbe.play()
 				self.direccionx = 1
 			if self.x >= 1260:
+				sound_orbe.play()
 				self.direccionx = 0
 			if self.y <= 0:
+				sound_orbe.play()
 				self.direcciony = 1
 			if self.y >= 600:
+				sound_orbe.play()
 				self.direcciony = 0
 			if Personaje.check_colisiones(self, plataforma) == True:
 				plataforma.vidas -= 10
@@ -669,6 +681,10 @@ class Suelo(Objeto):
 		else:
 			self.color = (0, 0, 0)
 		if 0 < cont_mago <= 200:
+			if oscuridad == 0:
+				sound_mago.play()
+			else:
+				sound_oscuridad.play()
 			self.y -= 0.25
 		elif 50 < cont_mago <= 400:
 			self.y += 0.25
@@ -802,6 +818,19 @@ espadita2_1 = transform.scale(image.load("shoshin-kantetsu_images/espada2_1.png"
 espadita2_2 = transform.scale(image.load("shoshin-kantetsu_images/espada2_2.png"), (50, 50))
 oscuridad1 = transform.scale(image.load("shoshin-kantetsu_images/oscuridad1.png"), (150, 150))
 oscuridad2 = transform.scale(image.load("shoshin-kantetsu_images/oscuridad2.png"), (150, 150))
+sound_gordo = mixer.Sound('shoshin-kantetsu_sounds/gordo.ogg')
+sound_espada_gordo = mixer.Sound('shoshin-kantetsu_sounds/espada_gordo.ogg')
+sound_espada_gordo.set_volume(0.32)
+sound_ninja = mixer.Sound('shoshin-kantetsu_sounds/ninja.ogg')
+sound_ninja.set_volume(0.25)
+sound_espada_ninja = mixer.Sound('shoshin-kantetsu_sounds/espada_ninja.ogg')
+sound_colores = mixer.Sound('shoshin-kantetsu_sounds/colores.ogg')
+sound_mago = mixer.Sound('shoshin-kantetsu_sounds/mago.ogg')
+sound_mago.set_volume(0.5)
+sound_orbe = mixer.Sound('shoshin-kantetsu_sounds/orbe.ogg')
+sound_orbe.set_volume(0.5)
+sound_oscuridad = mixer.Sound('shoshin-kantetsu_sounds/oscuridad.ogg')
+sound_oscuridad.set_volume(0.1)
 animacion_hikaru = 0
 animacion_gordo = 0
 animacion_ninja = 3
@@ -838,13 +867,17 @@ while True:
 		choice = 0
 		racha = 0
 		color_x = randrange(0, 1230)
-		color_y = 0
+		color_y = -1
 		ataque_mago = -1
 		cont_mago = 0
 		oscuridad = 0
 		opciones = [7,10,11]
+		mixer.music.set_volume(0.25)
+		mixer.music.load('shoshin-kantetsu_sounds/hope-has-arrived.ogg')
+		mixer.music.set_volume(mixer.music.get_volume())
 		cut_scene_manager.start_cut_scene(CutSceneZero(plataforma))
 		if cut_scene_manager.cut_scene is None:
+			mixer.music.play(-1)
 			z = 0
 	if level == 0 and z == 0: #TUTORIAL
 		fondo = fondo1
@@ -871,8 +904,11 @@ while True:
 		enemigo.disparo4.x = -100
 		enemigo.disparo5.x = 1380
 		enemigo.disparo6.x = -100
+		mixer.music.load('shoshin-kantetsu_sounds/sparkles.ogg')
+		mixer.music.set_volume(mixer.music.get_volume())
 		cut_scene_manager.start_cut_scene(CutSceneOneStart(plataforma))
 		if cut_scene_manager.cut_scene is None:
+			mixer.music.play(-1)
 			z = 2
 	if level == 2 and z == 2:
 		fondo = fondo3
@@ -901,8 +937,13 @@ while True:
 		enemigo.x = 900
 		enemigo.y = 175
 		ninja = 3
+		mixer.music.load('shoshin-kantetsu_sounds/the-fall.ogg')
+		mixer.music.set_volume(mixer.music.get_volume())
 		cut_scene_manager.start_cut_scene(CutSceneSecondStart(plataforma))
 		if cut_scene_manager.cut_scene is None:
+			mixer.music.play(-1)
+			ninja1 = transform.scale(image.load("shoshin-kantetsu_images/ninja1_1.png"), (75, 150))
+			ninja2 = transform.scale(image.load("shoshin-kantetsu_images/ninja2_1.png"), (75, 150))
 			z = 3
 	if level == 3 and z == 3:
 		fondo = fondo4
@@ -925,8 +966,11 @@ while True:
 		plataforma.vidas = 100
 		plataforma.x = 130
 		plataforma.y = 575
+		mixer.music.load('shoshin-kantetsu_sounds/stories.ogg')
+		mixer.music.set_volume(mixer.music.get_volume())
 		cut_scene_manager.start_cut_scene(CutSceneThreeStart(plataforma))
 		if cut_scene_manager.cut_scene is None:
+			mixer.music.play(-1)
 			z = 4
 	if level == 4 and z == 4:
 		fondo = fondo5
@@ -1003,8 +1047,11 @@ while True:
 		suelo4.color = (0,0,0)
 		suelo5.color = (0,0,0)
 		suelo6.color = (0,0,0)
+		mixer.music.load('shoshin-kantetsu_sounds/transcendent.ogg')
+		mixer.music.set_volume(mixer.music.get_volume())
 		cut_scene_manager.start_cut_scene(CutSceneFourStart(plataforma))
 		if cut_scene_manager.cut_scene is None:
+			mixer.music.play(-1)
 			z = 5
 	if level == 5 and z == 5:
 		fondo = fondo6
@@ -1047,8 +1094,11 @@ while True:
 		enemigo.disparo6.x = 1880
 		enemigo.disparo6.direccionx = 0
 		enemigo.disparo6.direcciony = 0
+		mixer.music.load('shoshin-kantetsu_sounds/wake.ogg')
+		mixer.music.set_volume(mixer.music.get_volume())
 		cut_scene_manager.start_cut_scene(CutSceneFiveStart(plataforma))
 		if cut_scene_manager.cut_scene is None:
+			mixer.music.play(-1)
 			z = 6
 	if level == 6 and z == 6:
 		oscuridad = 1
@@ -1124,6 +1174,14 @@ while True:
 		suelo4.color = (0,0,0)
 		suelo5.color = (0,0,0)
 		suelo6.color = (0,0,0)
+
+		ninja_preataque = transform.scale(image.load("shoshin-kantetsu_images/oscuridad1.png"), (100, 100))
+		ninja_preataque2 = transform.scale(image.load("shoshin-kantetsu_images/oscuridad_preataque2.png"), (100, 100))
+		ninja_preataque3 = transform.scale(image.load("shoshin-kantetsu_images/oscuridad_preataque3.png"), (100, 100))
+
+		mixer.music.load('shoshin-kantetsu_sounds/the-landing.ogg')
+		mixer.music.set_volume(mixer.music.get_volume())
+		mixer.music.play(-1)
 		
 		z = 7
 
@@ -1183,6 +1241,7 @@ while True:
 				if terremoto == True: #and suelo == False:
 					enemigo.disparo1.x = enemigo.x + 30
 					enemigo.disparo2.x = enemigo.x
+					sound_gordo.play()
 					terremoto = False
 				enemigo.Terremoto_Gordo()
 				screen.blit(slash, [enemigo.disparo1.x-50, enemigo.disparo1.y])
@@ -1725,6 +1784,12 @@ while True:
 				exit()
 		if evento.type==KEYDOWN:
 			quieto = False
+			if evento.key == K_LEFT:
+				enemigo.vidas -= 30
+			if evento.key == K_1 and mixer.music.get_volume() > 0.0:
+				mixer.music.set_volume(mixer.music.get_volume() - 0.1)
+			if evento.key == K_2 and mixer.music.get_volume() > 0.0:
+				mixer.music.set_volume(mixer.music.get_volume() + 0.1)
 			if evento.key == K_z and retry == True:
 				if oscuridad == 0:
 					cut_scene_manager.cut_scenes_complete = []
