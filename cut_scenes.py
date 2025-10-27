@@ -2,7 +2,6 @@ from pygame import *
 from sys import *
 init()
 
-
 def draw_text(screen, text, size, color, x, y):
     main_font = font.SysFont('cambria', size)
     text_surface = main_font.render(text, True, color)
@@ -1875,3 +1874,4 @@ class CutSceneManager:
             draw.rect(self.screen, (0, 0, 0, 0), (0, 600, self.screen.get_width(), self.window_size))
             # Draw specific cut scene details
             self.cut_scene.draw(self.screen)
+
