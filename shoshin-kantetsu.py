@@ -5,6 +5,8 @@ from cut_scenes import *
 init()
 screen = display.set_mode((1280, 720), FULLSCREEN)
 display.set_caption('Shoshi-Kantetsu')
+icono = image.load("shoshin-kantetsu_images/icono_shoshin-kantetsu.png")
+display.set_icon(icono)
 
 #HIJO: HIKARU		PADRE: TAKASHI
 
@@ -33,8 +35,6 @@ class Personaje(Objeto):
 		x = self.x
 		y = self.y
 		keys = key.get_pressed()
-		#print(angulo)
-		#print(suelo)
 		if angulo == 0.0 and suelo == False:
 			self.y += 2
 		else:
@@ -112,8 +112,6 @@ class Personaje(Objeto):
 		if keys[K_SPACE] == 0:
 			ataque = 0
 			time_ataque = 0
-		#else:
-		#	self.espada.y = 10000
 
 	def check_colisiones(sprite1, sprite2):
 		xsprite1 = sprite1.x
@@ -1102,7 +1100,6 @@ while True:
 			z = 6
 	if level == 6 and z == 6:
 		oscuridad = 1
-
 		fondo = fondo7
 		suelo1.x = 0
 		suelo1.y = 599
@@ -1140,7 +1137,6 @@ while True:
 		enemigo.largo = 80
 		plataforma.x = 625
 		plataforma.y = 350
-
 		enemigo.disparo1.largo = 20
 		enemigo.disparo1.ancho = 20
 		enemigo.disparo2.largo = 20
@@ -1163,7 +1159,6 @@ while True:
 		enemigo.disparo4.direcciony = 0
 		enemigo.disparo5.x = 5000
 		enemigo.disparo6.x = 5000
-
 		aleatorio1 = -1
 		aleatorio2 = -1
 		aleatorio3 = -1
@@ -1174,20 +1169,15 @@ while True:
 		suelo4.color = (0,0,0)
 		suelo5.color = (0,0,0)
 		suelo6.color = (0,0,0)
-
 		ninja_preataque = transform.scale(image.load("shoshin-kantetsu_images/oscuridad1.png"), (100, 100))
 		ninja_preataque2 = transform.scale(image.load("shoshin-kantetsu_images/oscuridad_preataque2.png"), (100, 100))
 		ninja_preataque3 = transform.scale(image.load("shoshin-kantetsu_images/oscuridad_preataque3.png"), (100, 100))
-
 		mixer.music.load('shoshin-kantetsu_sounds/the-landing.ogg')
 		mixer.music.set_volume(mixer.music.get_volume())
 		mixer.music.play(-1)
-		
 		z = 7
 
 	animacion_hikaru += 1
-	#print(plataforma.x)
-	#print(plataforma.y)
 
 	#FONDO
 	screen.blit(fondo, [0, 0])
@@ -1195,8 +1185,6 @@ while True:
 	barra_hp(screen, 1060, 40, plataforma.vidas, (0,0,255))
 	screen.blit(vida_hikaru, [1000, -100])
 	screen.blit(vida_boss, [-25, -100])
-	#plataforma.DibujarObjeto()
-	#enemigo.DibujarObjeto()
 	
 	if (cut_scene_manager.cut_scene is None and retry == False) or (level == 0 and z == 0):
 		plataforma.Movimiento()
@@ -1238,7 +1226,7 @@ while True:
 					screen.blit(slash, [enemigo.disparo5.x-50, enemigo.disparo5.y])
 					screen.blit(slash_, [enemigo.disparo6.x-20, enemigo.disparo6.y])
 			if enemigo.direccionx == 2:
-				if terremoto == True: #and suelo == False:
+				if terremoto == True:
 					enemigo.disparo1.x = enemigo.x + 30
 					enemigo.disparo2.x = enemigo.x
 					sound_gordo.play()
@@ -1366,8 +1354,6 @@ while True:
 			retry = True
 
 		if (ataque == 1 or ataque == 2) and plataforma.direcciony == 0 and color_y >= 50:
-			#if suelo7.check_suelo(plataforma): #ESTATUA
-				#choice = 7
 			if suelo8.check_suelo(plataforma): #ROJO
 				choice = 8
 			if suelo9.check_suelo(plataforma): #AZUL
@@ -1519,15 +1505,15 @@ while True:
 				enemigo.Ataque_Orbe(enemigo)
 
 			if (ataque == 1 or ataque == 2) and plataforma.direcciony == 0 and color_y >= 50:
-				if suelo8.check_suelo(plataforma): #ROJO
+				if suelo8.check_suelo(plataforma):
 					choice = 8
-				if suelo9.check_suelo(plataforma): #AZUL
+				if suelo9.check_suelo(plataforma):
 					choice = 9
-				if suelo10.check_suelo(plataforma): #BLANCO
+				if suelo10.check_suelo(plataforma):
 					choice = 10
-				if suelo11.check_suelo(plataforma): #NEGRO
+				if suelo11.check_suelo(plataforma):
 					choice = 11
-				if suelo12.check_suelo(plataforma): #DORADO
+				if suelo12.check_suelo(plataforma):
 					choice = 12
 		
 		if enemigo.vidas <= 70 and enemigo.vidas >= 40: #ETAPA 2
@@ -1784,8 +1770,6 @@ while True:
 				exit()
 		if evento.type==KEYDOWN:
 			quieto = False
-			if evento.key == K_LEFT:
-				enemigo.vidas -= 30
 			if evento.key == K_1 and mixer.music.get_volume() > 0.0:
 				mixer.music.set_volume(mixer.music.get_volume() - 0.1)
 			if evento.key == K_2 and mixer.music.get_volume() > 0.0:
